@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#08090d" />
+  <title>BrandLens — Intro Animation Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #08090d;
+      --ink: #f4f4f7;
+      --muted: #92939f;
+      --violet: #a68bff;
+      --cyan: #9cecff;
+      --ease: cubic-bezier(.2,.75,.2,1);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      min-height: 100vh;
+      min-height: 100svh;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Manrope", system-ui, sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 50% 48%, rgba(85,76,130,.13), transparent 43%),
+        radial-gradient(ellipse at 80% 15%, rgba(58,111,132,.07), transparent 32%),
+        linear-gradient(180deg, #090a0f 0%, #08090d 100%);
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      opacity: .12;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+    }
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .haze {
+      position: absolute;
+      width: min(62vw, 780px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      left: 50%;
+      top: 48%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(117,96,185,.105) 0%, rgba(73,100,133,.045) 32%, transparent 68%);
+      filter: blur(14px);
+      animation: hazeBreathe 9s ease-in-out infinite alternate;
+    }
+    .lens {
+      position: absolute;
+      width: min(70vw, 850px);
+      aspect-ratio: 1;
+      left: 50%;
+      top: 48%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px solid rgba(205,201,255,.045);
+      box-shadow: inset 0 0 100px rgba(120,105,180,.025), 0 0 100px rgba(80,150,180,.018);
+      opacity: .85;
+    }
+    .lens::before, .lens::after {
+      content: "";
+      position: absolute;
+      inset: 9%;
+      border-radius: 50%;
+      border: 1px solid rgba(156,236,255,.055);
+      transform: rotate(-28deg) scaleX(.8);
+    }
+    .lens::after {
+      inset: 20%;
+      border-color: rgba(190,170,255,.055);
+      transform: rotate(25deg) scaleX(1.13);
+    }
+    .light-streak {
+      position: absolute;
+      width: 1px;
+      height: 36vh;
+      top: 30%;
+      left: 16%;
+      background: linear-gradient(transparent, rgba(156,236,255,.22), transparent);
+      opacity: 0;
+      transform: rotate(24deg);
+      animation: streak 9s 3s ease-in-out infinite;
+    }
+    .light-streak.two {
+      left: 83%;
+      top: 55%;
+      height: 24vh;
+      animation-delay: 6s;
+      transform: rotate(-22deg);
+    }
+    .grain-dot {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      background: #b8c8ff;
+      opacity: 0;
+      animation: drift 10s ease-in-out infinite;
+    }
+
+    .intro {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      background: #08090d;
+      transition: opacity 1s var(--ease), visibility 1s;
+    }
+    .intro.done {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .intro-core { text-align: center; position: relative; padding: 2rem; }
+    .intro-mark {
+      width: 28px;
+      height: 28px;
+      margin: 0 auto 23px;
+      position: relative;
+      opacity: 0;
+      animation: markIn 1.2s .25s var(--ease) forwards;
+    }
+    .intro-mark::before, .intro-mark::after {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border: 1px solid rgba(202,192,255,.8);
+      border-radius: 50%;
+    }
+    .intro-mark::after {
+      inset: 7px;
+      border-color: rgba(156,236,255,.9);
+      box-shadow: 0 0 20px rgba(156,236,255,.25);
+    }
+    .intro-name {
+      font-size: clamp(2.8rem, 8vw, 6.8rem);
+      font-weight: 600;
+      letter-spacing: .22em;
+      margin: 0;
+      padding-left: .22em;
+      opacity: 0;
+      filter: blur(14px);
+      transform: translateY(12px);
+      animation: titleIn 1.35s .45s var(--ease) forwards, titleOut .85s 2.55s var(--ease) forwards;
+      white-space: nowrap;
+    }
+    .intro-name span {
+      color: #c8bbff;
+      text-shadow: 0 0 38px rgba(166,139,255,.25);
+    }
+    .intro-line {
+      width: 0;
+      height: 1px;
+      margin: 25px auto 0;
+      background: linear-gradient(90deg, transparent, var(--violet), var(--cyan), transparent);
+      animation: lineGrow 1.2s .85s var(--ease) forwards, lineOut .5s 2.7s ease forwards;
+    }
+    .intro-caption {
+      margin: 17px 0 0;
+      font: 10px "DM Mono", monospace;
+      letter-spacing: .32em;
+      color: #81818e;
+      opacity: 0;
+      animation: captionIn .7s 1.1s ease forwards, fadeAway .45s 2.65s ease forwards;
+    }
+    .intro-skip {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #686975;
+      background: none;
+      border: 0;
+      font: 10px "DM Mono", monospace;
+      letter-spacing: .18em;
+      cursor: pointer;
+      padding: 12px;
+      transition: color .2s;
+    }
+    .intro-skip:hover { color: #fff; }
+
+    .thoughts {
+      position: fixed;
+      inset: 0;
+      z-index: 15;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .5s;
+    }
+    .thoughts.active { opacity: 1; }
+    .thought {
+      position: absolute;
+      margin: 0;
+      width: min(90%, 1000px);
+      text-align: center;
+      font-size: clamp(1.2rem, 3.2vw, 2.5rem);
+      font-weight: 500;
+      letter-spacing: -.045em;
+      line-height: 1.3;
+      color: #e8e7ee;
+      opacity: 0;
+      filter: blur(8px);
+      transform: translateY(12px);
+      transition: opacity .8s var(--ease), filter .8s var(--ease), transform .8s var(--ease);
+    }
+    .thought.active { opacity: 1; filter: blur(0); transform: translateY(0); }
+    .thought em { color: #bcaaff; font-style: normal; }
+
+    /* Demo-only ending screen. In the real app, preserve the existing landing page here. */
+    .site {
+      position: relative;
+      z-index: 2;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 1.2s var(--ease), transform 1.2s var(--ease);
+    }
+    .site.visible { opacity: 1; transform: translateY(0); }
+    .site-note { max-width: 650px; }
+    .site-note small {
+      color: #9c91ca;
+      font: 10px "DM Mono", monospace;
+      letter-spacing: .2em;
+    }
+    .site-note h2 {
+      margin: 18px 0 12px;
+      font-size: clamp(1.7rem, 4.4vw, 3.3rem);
+      font-weight: 500;
+      letter-spacing: -.06em;
+    }
+    .site-note p { color: var(--muted); font-size: 14px; line-height: 1.8; }
+
+    @keyframes titleIn { to { opacity: 1; filter: blur(0); transform: translateY(0); } }
+    @keyframes titleOut { to { opacity: 0; filter: blur(12px); transform: translateY(-8px); letter-spacing: .38em; } }
+    @keyframes markIn { to { opacity: .9; transform: rotate(90deg); } }
+    @keyframes lineGrow { to { width: min(340px, 70vw); } }
+    @keyframes lineOut { to { opacity: 0; width: 0; } }
+    @keyframes captionIn { to { opacity: 1; } }
+    @keyframes fadeAway { to { opacity: 0; } }
+    @keyframes hazeBreathe {
+      from { opacity: .65; transform: translate(-50%,-50%) scale(.92); }
+      to { opacity: 1; transform: translate(-50%,-50%) scale(1.08); }
+    }
+    @keyframes streak {
+      0%,100% { opacity: 0; transform: translateY(-18px) rotate(24deg); }
+      35% { opacity: .65; }
+      65% { opacity: .15; transform: translateY(30px) rotate(24deg); }
+    }
+    @keyframes drift {
+      0%,100% { opacity: 0; transform: translate3d(0,0,0); }
+      25% { opacity: .3; }
+      70% { opacity: .08; transform: translate3d(16px,-30px,0); }
+    }
+
+    @media (max-width: 600px) {
+      .intro-name { letter-spacing: .12em; padding-left: .12em; }
+      .intro-caption { font-size: 8px; letter-spacing: .22em; }
+      .lens { width: 110vw; }
+      .thought { width: 88%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true">
+    <div class="haze"></div>
+    <div class="lens"></div>
+    <div class="light-streak"></div>
+    <div class="light-streak two"></div>
+    <span class="grain-dot" style="left:17%;top:26%;animation-delay:1s"></span>
+    <span class="grain-dot" style="left:72%;top:19%;animation-delay:3s"></span>
+    <span class="grain-dot" style="left:81%;top:72%;animation-delay:2s"></span>
+    <span class="grain-dot" style="left:31%;top:79%;animation-delay:5s"></span>
+    <span class="grain-dot" style="left:60%;top:63%;animation-delay:4s"></span>
+  </div>
+
+  <!-- INTRO ONLY: place this section at the top of the existing application. -->
+  <section class="intro" id="intro" aria-label="BrandLens introduction">
+    <div class="intro-core">
+      <div class="intro-mark" aria-hidden="true"></div>
+      <h1 class="intro-name">Brand<span>Lens</span></h1>
+      <div class="intro-line" aria-hidden="true"></div>
+      <p class="intro-caption">CLARITY IN EVERY IMPRESSION</p>
+    </div>
+    <button class="intro-skip" id="skipIntro" type="button">SKIP INTRO ↗</button>
+  </section>
+
+  <section class="thoughts" id="thoughts" aria-hidden="true">
+    <p class="thought">Every detail has a <em>meaning.</em></p>
+    <p class="thought">Every word leaves a <em>mark.</em></p>
+    <p class="thought">Every brand has a <em>standard.</em></p>
+    <p class="thought">Precision is not an <em>accident.</em></p>
+    <p class="thought">Make every impression <em>count.</em></p>
+  </section>
+
+  <!-- Demonstration placeholder only. Replace this section with your EXISTING landing page during integration. -->
+  <main class="site" id="site">
+    <div class="site-note">
+      <small>INTEGRATION PREVIEW</small>
+      <h2>Your existing BrandLens landing page goes here.</h2>
+      <p>This placeholder only proves that the intro fades away and reveals the page beneath it. When integrating, keep your current landing-page markup and remove this demo placeholder.</p>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      const intro = document.getElementById('intro');
+      const thoughts = document.getElementById('thoughts');
+      const thoughtEls = Array.from(document.querySelectorAll('.thought'));
+      const site = document.getElementById('site');
+      const skipIntro = document.getElementById('skipIntro');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      let introFinished = false;
+      let thoughtTimers = [];
+
+      function clearThoughtTimers() {
+        thoughtTimers.forEach(window.clearTimeout);
+        thoughtTimers = [];
+        thoughtEls.forEach(el => el.classList.remove('active'));
+      }
+
+      function showLanding() {
+        if (introFinished) return;
+        clearThoughtTimers();
+        intro.classList.add('done');
+        thoughts.classList.remove('active');
+        site.classList.add('visible');
+        introFinished = true;
+      }
+
+      function runIntro() {
+        if (reducedMotion) {
+          showLanding();
+          return;
+        }
+
+        introFinished = false;
+        thoughtEls.forEach(el => el.classList.remove('active'));
+        site.classList.remove('visible');
+        thoughts.classList.remove('active');
+        intro.classList.remove('done');
+
+        thoughtTimers.push(window.setTimeout(() => {
+          intro.classList.add('done');
+          thoughts.classList.add('active');
+
+          thoughtEls.forEach((el, index) => {
+            thoughtTimers.push(window.setTimeout(() => {
+              thoughtEls.forEach(other => other.classList.remove('active'));
+              el.classList.add('active');
+            }, index * 1120 + 120));
+          });
+
+          thoughtTimers.push(window.setTimeout(showLanding, thoughtEls.length * 1120 + 350));
+        }, 3450));
+      }
+
+      skipIntro.addEventListener('click', showLanding);
+      document.addEventListener('keydown', event => {
+        if (!introFinished && (event.key === 'Enter' || event.key === ' ')) {
+          event.preventDefault();
+          showLanding();
+        }
+      });
+
+      runIntro();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,661 @@
+# BRANDLENS — FINAL EXPERIENCE UPGRADE
+## Cinematic Landing Page + AI Help Assistant + WhatsApp Support + About & Guidelines + Complete UI Polish
+
+Continue developing my EXISTING BrandLens application. This is an incremental enhancement of the current working website, not a request to create a new project.
+
+First inspect the existing codebase, frontend architecture, styles, routes, authentication, database, company configuration, role guidelines, AI integration, background tasks, social account connections, and publishing workflow.
+
+Implement these improvements carefully while preserving all existing working functionality and saved data.
+
+# ABSOLUTE RULE: DO NOT BREAK THE EXISTING WEBSITE
+
+The existing BrandLens application already has:
+- A cinematic welcome animation.
+- A dark visual identity with violet, indigo, and cyan accents.
+- A working landing page and login system.
+- Employee, Manager, and Administrator roles.
+- Dashboard, New Post, Pending, and History.
+- AI text review and enhancement.
+- AI image analysis and image generation.
+- Nova Unlimited company governance and role-specific guidelines.
+- Post status transitions and activity history.
+- Database persistence and background AI task handling.
+- Existing social account connection and publishing functionality, if already configured.
+
+Preserve these features and their existing integrations.
+
+Do not rebuild the website from scratch, discard saved posts, replace the current framework, change working API formats unnecessarily, or introduce an unrelated design.
+
+Reuse existing components, styles, backend services, and configuration wherever possible. Make targeted changes and test them afterward.
+
+# PART 1 — EXPAND THE LANDING PAGE INTO A CINEMATIC BRANDLENS EXPERIENCE
+
+The current landing page is too small and does not explain the product enough. Expand it into a beautifully designed, immersive, scrollable landing page.
+
+The design should feel like a premium, futuristic AI product with a strong visual identity. It should be impressive immediately, but remain minimal, sophisticated, responsive, and easy to understand.
+
+## 1. Preserve the opening animation
+
+Keep the existing BrandLens intro animation:
+- The near-black opening screen.
+- BrandLens logo/title reveal.
+- Existing disappearing title animation.
+- Animated words and subtle background effects.
+- Transition into the landing page.
+
+Do not remove or replace the existing intro unless a specific change is necessary to make it work correctly.
+
+The intro should play only once per page load, support skipping, respect reduced-motion preferences, and never block access to the application.
+
+## 2. Upgrade the hero section
+
+The first landing-page viewport should look exceptional.
+
+At the top, display:
+- BrandLens wordmark and a refined animated logo.
+- Minimal navigation links such as Overview, How It Works, and About.
+- A clearly visible ENTER BRANDLENS CTA.
+
+Hero headline:
+
+**Your brand deserves  
+more than a review.**
+
+Supporting text:
+
+“An intelligent brand governance workspace that helps every message stay relevant, consistent, and ready for the right audience.”
+
+Add a small, elegant label:
+
+“AI-POWERED BRAND INTELLIGENCE”
+
+Use large, beautiful typography, generous negative space, an animated text reveal, subtle lighting, and a few visually meaningful interface elements.
+
+Do not fill the entire hero with cards or paragraphs.
+
+## 3. Make ENTER BRANDLENS impossible to miss
+
+The existing Enter BrandLens button is too boring and does not clearly look clickable.
+
+Redesign it as the main action of the landing page.
+
+Requirements:
+- Prominent size and comfortable padding.
+- Clear background or border contrast.
+- Readable label: **ENTER BRANDLENS**.
+- A directional arrow icon.
+- A distinctive hover state using the existing violet/cyan visual language.
+- A subtle light sweep or animated border.
+- A clear pressed state.
+- Keyboard focus indicator.
+- A small motion cue that communicates interactivity without being annoying.
+
+The button must work reliably.
+
+When clicked, it must open the existing BrandLens login screen using the existing authentication flow. Do not bypass login or invent another authentication system.
+
+Provide a smaller, secondary “Explore the platform” action that scrolls to the product overview section.
+
+The main CTA must remain clearly visible at desktop and mobile widths.
+
+## 4. Add a rich but carefully balanced landing-page experience
+
+Expand the page with the following sections.
+
+### Section A — BrandLens in one view
+
+Use three visually distinctive information blocks:
+
+**Brand Relevance**
+Ensure content relates to the company's actual business and services.
+
+**Role-Aware Governance**
+Check whether the post fits the author's designated responsibility and permission scope.
+
+**Content Intelligence**
+Review text and media, identify concerns, and provide practical improvements before publishing.
+
+Use refined cards with subtle depth, soft gradients, thin borders, and elegant hover effects. Keep these cards relatively compact and avoid making the page look crowded.
+
+### Section B — How BrandLens works
+
+Create a beautiful visual sequence showing the core workflow:
+
+1. CREATE — Draft a post for a selected platform.
+2. CHECK — Review company relevance, role scope, facts, and content quality.
+3. IMPROVE — Apply corrections, regenerate or review media, and recheck the content.
+4. PREPARE — Save the final version and prepare it for publication.
+5. PUBLISH — Publish through an authorized, connected social account when the integration and permissions are available.
+
+Use an animated connecting line or a gentle scroll-reveal sequence.
+
+Do not claim that a publication integration is active unless the existing platform connection is actually configured and working.
+
+### Section C — A workspace with context
+
+Show an attractive visual preview of BrandLens's governance interface.
+
+Use a realistic illustrative preview that matches the existing UI, such as a compact post-review panel with:
+- Company relevance: Pass.
+- Role permissions: Check.
+- Content quality: Pass.
+
+Clearly label any purely illustrative or static preview as a preview. Do not invent live data or falsely display actual company approval.
+
+Avoid generating a fake full dashboard that does not match the real application.
+
+### Section D — Designed for teams
+
+Show three compact role cards:
+
+Employee — Product and operational content within assigned scope.
+
+Manager — Campaigns, team initiatives, and management-level content within assigned authority.
+
+Administrator — Organization-wide communications and company-level messaging within configured permissions.
+
+Explain that role policies are configurable and that all users must follow the company's applicable guidelines.
+
+### Section E — Final CTA
+
+Add a beautiful final section with a soft cinematic background effect.
+
+Headline:
+
+**Make every post count.**
+
+Supporting text:
+
+“Review with context. Improve with confidence. Publish with clarity.”
+
+Add a prominent ENTER BRANDLENS action that opens the existing login screen.
+
+## 5. Landing-page motion design
+
+Use:
+- Smooth section reveals during scrolling.
+- Subtle parallax on background lighting.
+- Animated headings.
+- Gentle floating overlay cards.
+- Hover-responsive cards.
+- Soft gradient movements.
+- Elegant line-drawing or connection animations.
+- Smooth transitions between page sections.
+- Small motion cues for interactive elements.
+
+Keep animation lightweight and restrained.
+
+Do not use a satellite interface, random floating planets, excessive neon, aggressive glitch effects, or hundreds of moving elements.
+
+Ensure smooth performance on ordinary laptops and mobile devices. Respect prefers-reduced-motion.
+
+# PART 2 — MAKE THE ENTIRE APPLICATION FEEL PREMIUM
+
+Polish the existing application, not just the landing page.
+
+Keep the current dark, violet, and cyan design system.
+
+Improve:
+- Typography hierarchy.
+- Consistent spacing and alignment.
+- Button sizes and interaction feedback.
+- Sidebar active states.
+- Card hover effects.
+- Page transitions.
+- Loading states.
+- Empty states.
+- Error states.
+- Toast notifications.
+- Modal styling.
+- Expandable post details.
+- AI result presentation.
+- Filter transitions.
+- Mobile navigation.
+
+Important text should be readable at normal browser zoom.
+
+Use professional typography:
+- Main page headings approximately 30–40px on desktop.
+- Section headings approximately 22–28px.
+- Main body text approximately 15–16px.
+- Form labels approximately 13–14px.
+- Small metadata should remain readable.
+
+Use responsive sizing rather than forcing desktop dimensions on mobile.
+
+Avoid displaying technical labels everywhere. Keep ordinary user-facing text simple and human-readable.
+
+Keep technical evidence available where necessary, but place advanced details inside expandable panels rather than displaying everything at once.
+
+Every interactive control must have a working action. Do not add decorative buttons that do nothing.
+
+Do not let animations interfere with forms, navigation, AI requests, or social publishing.
+
+# PART 3 — IMPLEMENT THE HELP SECTION
+
+Implement the currently reserved Help page as a real, functional support workspace.
+
+The Help section must contain:
+1. An AI support assistant.
+2. A command input that recognizes `/help {message}`.
+3. A WhatsApp support redirect.
+4. A small list of example questions.
+5. Helpful guidance when the AI provider or WhatsApp configuration is unavailable.
+
+Keep it consistent with the current BrandLens design.
+
+## A. Help assistant interface
+
+Create a polished, compact chatbot interface.
+
+Include:
+- Header: BrandLens Help Assistant.
+- Subtitle: “Quick answers for your workspace.”
+- A small welcome message.
+- A conversation area.
+- A text input.
+- A Send button.
+- A clear loading state.
+- Example question chips.
+- A way to clear or start a new conversation.
+
+Suggested example questions:
+- How do I create a new post?
+- Why was my post flagged?
+- How do I apply an AI suggestion?
+- What does Ready to Post mean?
+- How do I connect a social account?
+- Why is my image generation still running?
+
+Clicking an example question should fill or submit the corresponding question.
+
+The chatbot should be concise, practical, and aware of the existing BrandLens workflows.
+
+Do not build an unnecessary, complex general-purpose chatbot.
+
+## B. Use my EXISTING AI API
+
+The Help assistant must use the same existing FreeLLM-compatible AI service already configured for BrandLens.
+
+Reuse the existing backend AI service and environment variables wherever possible.
+
+Do not create a separate duplicated API implementation in the frontend.
+
+Do not switch to Gemini, OpenAI, or another provider.
+
+Do not request a new API key or expose the current AI API key in client-side code.
+
+Use the existing server-side provider configuration and a dedicated Help service or endpoint if needed.
+
+If the existing provider endpoint is already configured in the application, reuse it rather than hardcoding a second copy.
+
+### Help assistant prompt
+
+Use the following concise system instruction or its equivalent:
+
+“You are the BrandLens Help Assistant. You help users understand and operate the existing BrandLens application. Give brief, friendly, practical answers, preferably in two to five sentences. Explain dashboard metrics, creating posts, company governance checks, role scopes, AI review results, applying corrections, issue tags, post statuses, connected accounts, and publishing workflows.
+
+Use the supplied BrandLens product documentation and actual application configuration as your source of truth. Do not invent features, permissions, account connections, API capabilities, company policies, or completed actions. If a feature is unavailable or a setting is missing, explain that clearly. Never claim that a social account is connected or a post was published without verified application data. If a question requires support beyond your available information, say so and direct the user to the configured support channel.”
+
+Supply only relevant, concise context about BrandLens, the current company configuration, and the help documentation.
+
+Do not send private API keys, social-platform access tokens, passwords, or unnecessary user data to the AI.
+
+### Chatbot response behaviour
+
+- Return concise answers.
+- Show the user question and answer clearly.
+- Display a friendly loading indicator while the real AI request is processing.
+- Handle timeouts, HTTP errors, rate limits, and malformed responses.
+- Preserve the conversation when navigating within the Help page, where appropriate.
+- Prevent duplicate submissions from rapid repeated clicks.
+- Make keyboard Enter/Send behaviour intuitive and accessible.
+- Do not fabricate an answer if the provider fails.
+- If the AI service is unavailable, give a useful error and keep the typed question.
+
+Use the existing application's server-side task handling if AI calls can take longer than a normal request.
+
+# PART 4 — IMPLEMENT THE `/help {message}` WHATSAPP COMMAND
+
+Add a command handler to the Help assistant input.
+
+When the user enters a command in this format:
+
+`/help sir i need help with connecting LinkedIn`
+
+Interpret everything after `/help` as the user's support message.
+
+Whitespace after the command is allowed.
+
+A valid command should be handled as a WhatsApp support request, not submitted as a regular AI question.
+
+### Required behaviour
+
+1. Detect `/help` only when it appears as the first complete command token.
+2. Extract the remaining user message without losing its text.
+3. Check that the message is not empty.
+4. Construct a WhatsApp URL using the configured support phone number and message.
+5. URL-encode the message correctly.
+6. Open WhatsApp through the normal browser navigation or an appropriate new tab.
+7. Show a friendly fallback if the user's environment cannot open WhatsApp.
+
+Use the general URL format:
+
+`https://wa.me/SUPPORT_PHONE_NUMBER?text=URL_ENCODED_MESSAGE`
+
+The phone number must be configured separately.
+
+Do not include plus signs, spaces, brackets, hyphens, or other formatting characters in the phone-number path. Use the international country code followed by the number in digits only, according to WhatsApp's supported format.
+
+Do not guess or invent our support number.
+
+Create a configuration entry or existing settings field for:
+
+`WHATSAPP_SUPPORT_NUMBER`
+
+Use an empty/unconfigured value until I provide the actual support number. If no number has been configured, show “WhatsApp support is not configured yet” and do not generate a fake destination URL.
+
+The support number is a public routing destination, not an API secret. Nevertheless, keep the value in one central configuration location instead of duplicating it across components.
+
+### Examples
+
+Input:
+`/help sir i need help`
+
+Action:
+Open the configured WhatsApp support destination with the pre-filled message:
+`sir i need help`
+
+Input:
+`/help unable to publish my LinkedIn post`
+
+Action:
+Open WhatsApp with:
+`unable to publish my LinkedIn post`
+
+Input:
+`/help`
+
+Action:
+Show:
+“Please add a short message after /help.”
+
+Input:
+`/helpfully how does review work?`
+
+Action:
+Treat it as an ordinary question because `/helpfully` is not the `/help` command.
+
+### User-friendly command hint
+
+Under the Help input, display a small hint:
+
+“Need human support? Type `/help your message` to open WhatsApp.”
+
+Also include a small WhatsApp support action if the support number is configured. Make it clear that using it opens WhatsApp and does not automatically send the message; the user must review and send the message in WhatsApp.
+
+Do not automatically submit or send messages on the user's behalf.
+
+# PART 5 — IMPLEMENT THE ABOUT SECTION
+
+Turn the current About placeholder into a complete, beautifully designed, readable page.
+
+Separate two concepts:
+1. About BrandLens — the product.
+2. About Nova Unlimited — the currently configured organization whose governance rules are being enforced.
+
+Do not confuse the BrandLens product with the Nova Unlimited hosting company.
+
+## A. About BrandLens
+
+Introduce BrandLens with this concept:
+
+“BrandLens is an AI-powered brand governance workspace designed to help teams create content that remains relevant to their company, suitable for its intended audience, and consistent with assigned roles and brand guidelines.”
+
+Show a few meaningful feature blocks:
+- Company-aware content review.
+- Role-aware governance.
+- AI text improvement.
+- Media review and image generation.
+- Post workflow management.
+- Social account connection and publishing when properly configured.
+
+Do not describe future or unavailable functionality as already working.
+
+Use actual project functionality to determine which features are live, configured, or still awaiting setup.
+
+## B. About Nova Unlimited
+
+Display the current organization profile:
+
+Company: Nova Unlimited
+
+Industry: Server and hosting services.
+
+Company purpose: Content should relate to the company's actual hosting/server business and verified services, products, infrastructure, customer guidance, or legitimate business activities.
+
+Do not invent a company history, office location, founder, customer base, product catalogue, pricing, service guarantees, or statistics.
+
+Explicitly explain that company content must be supported by the actual configured company guidelines and approved facts.
+
+## C. Company governance principles
+
+Create a clear visual section called “How BrandLens Reviews Content”.
+
+Explain the three main checks in simple language:
+
+### 1. Company relevance
+
+Does the post relate to Nova Unlimited's actual hosting/server business or an explicitly permitted company activity?
+
+### 2. Role scope
+
+Is the author allowed to make this announcement, claim, commitment, or communication according to their assigned role and permissions?
+
+### 3. Content quality and factual integrity
+
+Is the post suitable for its chosen platform, consistent with the company's guidelines, and supported by available information?
+
+Explain that an AI suggestion is not the same as official company approval.
+
+## D. Role-specific guideline sections
+
+Use three visually distinct but consistent sections.
+
+### EMPLOYEE
+
+- Focus on approved product-level and operational content.
+- Explain genuine hosting/service features using available verified information.
+- Follow company terminology and communication guidelines.
+- Do not create unauthorized commercial commitments, unapproved pricing promises, or company-wide policy announcements.
+- Escalate matters requiring higher authorization.
+- Stay within assigned permissions.
+
+### MANAGER
+
+- Handle management-level announcements, approved hosting campaigns, team initiatives, project updates, and service-related business communications.
+- Ensure claims and commitments are supported by available company facts.
+- Follow company policies and approval requirements.
+- Do not assume every company-wide commitment has been approved merely because the author is a manager.
+- Stay within assigned permissions.
+
+### ADMINISTRATOR
+
+- Manage organization-wide messaging, approved company announcements, policies, and brand-wide communication within assigned authority.
+- Maintain consistency with the organization's guidelines and verified information.
+- Ensure major commitments and official claims are supported by actual approvals or facts.
+- Follow applicable company policies and permissions.
+
+Present these as the current starter guidelines for Nova Unlimited, not universal rules for every possible company.
+
+## E. Show the decision flow
+
+Add a beautiful visual process diagram or animated sequence:
+
+Draft → Company Relevance → Role Permissions → Content Quality → Review & Correct → Ready to Post → Publish
+
+Explain:
+- Blocking issues require correction or authorized handling.
+- Unverified claims require verification.
+- Minor suggestions do not automatically block a post.
+- After significant edits, applicable checks must run again.
+- Ready to Post is not the same as Published.
+- Actual publication must be confirmed by the platform or the existing explicit manual confirmation workflow.
+
+Use a responsive diagram or lightweight CSS/SVG illustration, not an unrelated decorative image.
+
+## F. About-page details
+
+Include:
+- Version information only if it exists in the current project.
+- A short statement explaining that AI assists review but does not automatically provide official company authorization.
+- A link to the Help section.
+- A link back to the dashboard or landing page as appropriate.
+
+Do not make up a company address, legal registration, founder, support number, or social links.
+
+# PART 6 — CONNECT HELP AND ABOUT TO THE EXISTING APPLICATION
+
+Replace the current Help and About “Coming Soon” placeholders with working navigation.
+
+Requirements:
+- The sidebar Help item opens the new AI support page.
+- The sidebar About item opens the new About page.
+- The landing-page About/Overview navigation scrolls to the correct section.
+- All navigation controls work.
+- The active sidebar item remains highlighted.
+- Back/forward navigation behaves correctly within the existing routing approach.
+- Preserve the logged-in user's identity and role when navigating between application pages.
+- The Help chatbot must not lose a running operation when navigating away.
+- Do not reset or delete post drafts, review results, or background task records during navigation.
+
+Use the existing routing library and page structure. Do not introduce a second unrelated routing system.
+
+# PART 7 — PROFESSIONAL POLISH ACROSS THE WHOLE WEBSITE
+
+Perform a careful consistency pass across the entire application.
+
+Check:
+- Landing page.
+- Login.
+- Dashboard.
+- New Post.
+- Pending.
+- History.
+- Help.
+- About.
+- Connected Accounts.
+- Publish confirmation flows.
+
+Use a consistent design system for:
+- Headings.
+- Body typography.
+- Card padding.
+- Border radius.
+- Button height.
+- Form labels.
+- Status badges.
+- Modal sizes.
+- Toast notifications.
+- Empty states.
+- Loading states.
+- Error states.
+
+Add subtle animations where they provide feedback or explain a transition.
+
+Make the website feel alive without making it distracting.
+
+Avoid:
+- Excessively small text.
+- Huge walls of technical explanations.
+- Random floating decorations.
+- Constant animation.
+- Overuse of glowing borders.
+- Large empty panels.
+- Unnecessary repeated content.
+- Broken buttons or fake interactions.
+
+Use generous spacing and meaningful visual hierarchy.
+
+All important actions must be obvious and easy to find. The ENTER BRANDLENS button is particularly important.
+
+The layout must remain usable at desktop, tablet, and mobile widths, including ordinary browser zoom.
+
+Respect reduced-motion preferences, readable contrast, keyboard access, and screen-reader labels.
+
+# PART 8 — PERFORMANCE, SECURITY, AND DATA SAFETY
+
+Use the existing backend, environment configuration, database, and AI services.
+
+Do not expose:
+- FreeLLM API keys.
+- Social-platform access tokens.
+- Refresh tokens.
+- Client secrets.
+- Application encryption keys.
+- Other private server configuration.
+
+The Help chatbot must call the existing configured AI provider through the backend. Never place the LLM API key in browser JavaScript.
+
+Do not send social tokens, passwords, or unnecessary private information to the Help AI.
+
+Avoid adding heavy frontend dependencies unless a clear need exists.
+
+Use dynamic imports or lazy-loaded routes if they improve load performance without breaking navigation.
+
+Preserve existing:
+- Landing-page animation.
+- Authentication.
+- Role isolation.
+- Company governance.
+- AI review and enhancement.
+- Media upload and generation.
+- Background task recovery.
+- Database persistence.
+- Post statuses.
+- Social account connections.
+- Publishing workflow.
+- Activity history.
+
+Do not perform destructive database changes. If schema updates are genuinely necessary, use safe migrations and preserve all existing records.
+
+Do not hardcode WhatsApp support numbers or invent credentials.
+
+# PART 9 — REQUIRED TESTS
+
+After implementing, run the actual application and test:
+
+1. The original BrandLens intro and landing-page transition still work.
+2. The expanded landing page contains all requested sections.
+3. The ENTER BRANDLENS button is prominent, looks clickable, and opens the existing login.
+4. All landing-page navigation and scroll links work.
+5. The landing page has smooth, lightweight animations.
+6. The logged-in application remains functional.
+7. Help opens as a real page instead of Coming Soon.
+8. A normal Help question reaches the configured LLM through the backend.
+9. The Help assistant gives concise, context-aware answers.
+10. API failures show a useful error and preserve the user's question.
+11. `/help sir i need help` constructs the correct WhatsApp URL when the number is configured.
+12. The WhatsApp message is properly URL-encoded.
+13. `/help` without a message shows a validation message.
+14. `/helpfully` is not treated as the `/help` command.
+15. An unconfigured WhatsApp number produces an honest setup message.
+16. About explains BrandLens and Nova Unlimited separately.
+17. Employee, Manager, and Administrator guidelines are displayed correctly.
+18. The governance explanation correctly distinguishes company relevance, role scope, and content quality.
+19. Existing AI operations and social publishing remain functional.
+20. The UI is readable and responsive on desktop and mobile.
+21. Existing posts, media, tasks, account connections, and history are preserved.
+22. There are no broken routes, dead buttons, exposed API keys, or unnecessary dependency changes.
+
+Implement the code, run the application, and fix errors.
+
+At the end, report briefly:
+- What was implemented.
+- Which interactions and AI calls were actually tested.
+- Whether WhatsApp support needs a phone number.
+- Any remaining configuration required for production.
+
+Do not claim a feature is live if it was only mocked or could not be tested.
+
+**FINAL PRIORITY:** Expand the landing page into a premium, animated BrandLens introduction, make the Enter BrandLens action unmistakable, implement a concise AI-powered Help assistant and configurable WhatsApp command, and build a clear About page describing BrandLens, Nova Unlimited, and the current role-specific governance policies. Preserve the existing working application.

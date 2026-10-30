@@ -1,0 +1,36 @@
+# Render Blueprint Specification for BrandLens
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: brandlens
+    runtime: node
+    plan: starter
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: FREELLM_API_KEY
+        value: freellmapi-8f8de172bcbe5eca8f44d66cb505c13753d45a54f99472dc
+      - key: FREELLM_API_URL
+        value: https://invalid-ayush-llm.onrender.com/v1/chat/completions
+      - key: IMAGE_GEN_URL
+        value: https://ai-image.ayushbhai1818.workers.dev/
+      - key: IMAGE_GEN_KEY
+        value: invalid
+      - key: APP_ENCRYPTION_KEY
+        value: ayushisinvalidayushisinvalid1818
+      - key: MAX_UPLOAD_MB
+        value: 25
+      - key: WHATSAPP_SUPPORT_NUMBER
+        value: "+919310296839"
+    # Optional persistent disk for keeping SQLite data across redeploys on Render
+    # Uncomment if using Render Team or Starter with Persistent Disk:
+    # disk:
+    #   name: brandlens-db
+    #   mountPath: /app/applet/data
+    #   sizeGB: 1

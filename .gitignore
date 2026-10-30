@@ -1,0 +1,16 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+data/
+*.db
+*.sqlite
+*.sqlite3
+uploads/
+.aistudio/
+*.pem
+*.key

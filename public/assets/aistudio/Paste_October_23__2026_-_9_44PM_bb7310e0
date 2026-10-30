@@ -1,0 +1,684 @@
+# BRANDLENS — PHASE 2: WORKING DASHBOARD, AI REVIEW, IMAGE GENERATION AND PERSISTENT DATABASE
+
+Continue developing my EXISTING BrandLens application. This is an incremental development task, not a request to create a new application.
+
+Read the existing project files before changing anything. Understand the current framework, routing, authentication, styles, components, database, and server setup.
+
+Implement the requirements below directly in the existing project.
+
+## ABSOLUTE PRIORITY: PRESERVE THE EXISTING DESIGN AND CODE
+
+The existing BrandLens landing page has a distinctive cinematic design. Preserve it exactly as much as possible.
+
+Keep the existing:
+- BrandLens opening animation and logo reveal.
+- Dark, almost-black background.
+- Violet, indigo, and cyan accent colours.
+- Existing typography, gradients, subtle lighting, and borders.
+- Existing empty-space aesthetic and smooth transitions.
+- Login layout, input styling, and button styling.
+- Existing visual effects and responsive behaviour.
+
+The dashboard should use this same visual language, adapted for a functional application interface.
+
+DO NOT:
+- Replace the landing page.
+- Rewrite the application from scratch.
+- Replace the current colour palette.
+- introduce a satellite, planet, orbital, or space-control interface.
+- Add large decorative circles, satellite graphics, or unnecessary glowing objects.
+- Turn the application into a generic corporate SaaS template.
+- Add unnecessary cards, sections, animations, or large empty panels.
+- Replace the whole package.json, framework, router, or build configuration without a genuine technical requirement.
+- Remove working authentication or animations.
+
+Make small, deliberate changes to existing files. Reuse existing components and styles wherever possible. Create new components and backend modules only where necessary.
+
+Before finishing, run the application and verify that the original landing page and login still work.
+
+# 1. AUTHENTICATION AND USER ROLES
+
+Support exactly these three demo accounts:
+
+Employee:
+- Username: employee
+- Password: employee123
+
+Manager:
+- Username: manager
+- Password: manager123
+
+Administrator:
+- Username: admin
+- Password: admin123
+
+Remove the CEO demo account and CEO role option if they are still present.
+
+All three roles must use the same dashboard layout and the same application features. Their own posts, review context, and starter brand guidelines must remain role-specific.
+
+A user logging in as Employee must see Employee-authored posts and Employee guideline context. Manager must see Manager-authored posts and Manager guideline context. Administrator must see Administrator-authored posts and Administrator guideline context.
+
+The selected role must match the entered account. Incorrect usernames, passwords, or role combinations must fail with a clear, generic error.
+
+Keep the existing login experience and demo credential autofill functionality if it already exists.
+
+This is still demo authentication, not production-secure authentication. Keep that limitation documented. Do not claim that frontend-only demo credentials provide secure identity verification.
+
+# 2. APPLICATION LAYOUT AND NAVIGATION
+
+After successful login, open the dashboard.
+
+Create a responsive application layout with a compact left sidebar and a main content area.
+
+Sidebar navigation:
+- DASHBOARD
+- NEW POST
+- HISTORY
+- PENDING
+- HELP — Coming Soon
+- ABOUT — Coming Soon
+
+Implement Dashboard, New Post, History, and Pending fully. Keep Help and About disabled or marked Coming Soon.
+
+At the bottom of the sidebar, display the logged-in username, role, and Logout action.
+
+The top bar should show the page title and a small, restrained BrandLens status indicator.
+
+Requirements:
+- Highlight the active navigation item.
+- Use the current dark/violet/cyan design system.
+- Keep the dashboard compact and easy to scan.
+- Support desktop and mobile layouts.
+- On mobile, use a proper collapsible sidebar or menu.
+- Navigation must work without requiring a full page reload where the existing architecture permits.
+- Logout must return the user to the existing login screen.
+
+Do not add new authentication providers or Google login.
+
+# 3. DASHBOARD — FOUR LIVE METRIC CARDS
+
+Display four clickable metric cards at the top:
+
+1. TOTAL POSTS
+2. PENDING
+3. ISSUES FOUND
+4. PUBLISHED
+
+All values must come from saved records in the database. Never hardcode metric counts.
+
+Definitions:
+- TOTAL POSTS: all posts belonging to the current user.
+- PENDING: that user's posts with status Pending.
+- ISSUES FOUND: that user's posts with unresolved text or media review findings.
+- PUBLISHED: posts whose publication has actually been confirmed by an existing, trusted source or integration.
+
+There is no real social publishing integration in this phase, so do not artificially mark saved posts as published.
+
+Clicking a card must filter the post list below it immediately.
+
+- TOTAL POSTS displays all of the current user's posts.
+- PENDING displays only pending posts.
+- ISSUES FOUND displays posts with unresolved findings.
+- PUBLISHED displays only genuinely published posts.
+
+Below the metrics, display a “Your Posts” section containing a useful list of matching records.
+
+Each list item should show:
+- Post title
+- Selected platform
+- Created date
+- Current status
+- Number of unresolved findings
+- View/Edit action
+
+Include simple search by title and compact status/platform filters if they fit the existing layout.
+
+Use clear empty states and a Create New Post action.
+
+Every dashboard metric and list must update after a successful save or edit. Values must also remain correct after refreshing the browser.
+
+# 4. ROLE-SPECIFIC STARTER GUIDELINES
+
+Create a central, editable guideline configuration module. Do not hardcode role policies throughout the UI.
+
+Use these starter guidelines:
+
+EMPLOYEE:
+- Product-focused posts.
+- Accurate product names, specifications, features, and benefits.
+- Clear, friendly, product-oriented language.
+- Flag unsupported product claims, misleading promises, and potentially inaccurate specifications.
+
+MANAGER:
+- Management-level announcements, campaigns, team initiatives, project updates, and business communications.
+- Clear, professional language.
+- Flag unsupported business claims, incorrect facts, ambiguous commitments, and inconsistent terminology.
+
+ADMINISTRATOR:
+- Organization-wide announcements, corporate communications, and brand-wide messaging.
+- Consistent organizational voice and accurate, approved information.
+- Flag unsupported corporate claims, inconsistent branding, and statements requiring verification.
+
+These are starter guidelines only. They are not official policies supplied by the company.
+
+Pass the correct role's guideline context to the AI whenever reviewing text, reviewing an image, or generating an image prompt.
+
+The user's selected social platform must also be supplied to the AI review service.
+
+Do not create a full guideline editor, guideline upload system, or asset-management page in this phase.
+
+# 5. NEW POST — COMPLETE CREATION WORKFLOW
+
+Build a functional New Post page inside the existing application.
+
+Use a simple, structured workflow with a clear visual hierarchy. Avoid turning it into a long, cluttered form.
+
+## A. Select platform
+
+Let the user choose:
+- Instagram
+- LinkedIn
+- X
+
+Make the selected platform visually clear.
+
+## B. Enter content
+
+Include:
+- Title — required
+- Caption / Post Details — required
+- Character counts
+- AI CHECK button
+
+Keep the title and caption editable at all times.
+
+## C. AI CHECK — TITLE AND CAPTION ANALYSIS
+
+Use my existing FreeLLM-compatible API for actual analysis.
+
+API endpoint:
+
+https://invalid-ayush-llm.onrender.com/v1/chat/completions
+
+HTTP method: POST
+
+Headers:
+- Authorization: Bearer ${FREELLM_API_KEY}
+- Content-Type: application/json
+
+Request model:
+- model: "auto"
+
+The API uses an OpenAI-compatible chat-completions request format.
+
+A text request can use the following general structure:
+
+{
+  "model": "auto",
+  "messages": [
+    {
+      "role": "user",
+      "content": "The concise BrandLens review prompt and the post information"
+    }
+  ]
+}
+
+Read the response from:
+
+choices[0].message.content
+
+Do not call Gemini, Google AI, OpenAI, or an unrelated AI provider as a substitute for my API.
+
+Do not create a fake AI review result and present it as a live API result.
+
+### Text-review prompt
+
+Prepare a concise prompt for the AI containing:
+- The post title.
+- The caption/details.
+- Selected social platform.
+- Current user's role.
+- Relevant starter guidelines for that role.
+
+Use this instruction:
+
+"You are BrandLens, a concise brand-content assistant. Review the supplied social media post title and caption/details for suitability for the selected platform and role-specific brand guidelines.
+
+Determine whether the content looks suitable, needs small corrections, or needs attention.
+
+Identify only meaningful problems, such as inconsistent terminology, potentially inaccurate details, unsupported claims, misleading promises, unclear messaging, or a mismatch with the supplied guidelines.
+
+Be concise, natural, and practical. Do not produce lengthy explanations, scores, hashtags, marketing essays, or irrelevant advice. Do not invent facts, approvals, sources, or citations. If a factual claim cannot be verified from the supplied information, clearly express uncertainty rather than asserting that it is true or false. Preserve the user's original intent when suggesting corrections."
+
+Request a short structured response with these fields:
+
+{
+  "verdict": "looks_good | changes_suggested | needs_attention",
+  "briefAnalysis": "One or two concise sentences",
+  "suggestion": "One short practical improvement",
+  "suggestedTitle": null,
+  "suggestedCaption": null,
+  "issues": []
+}
+
+If correction is unnecessary, suggestedTitle and suggestedCaption should be null where possible.
+
+If correction is needed, return the suggested corrected title and/or caption. Do not rewrite unaffected fields unnecessarily.
+
+The user interface should display:
+- Brief Analysis
+- Suggestion
+- Issues, when applicable
+- Suggested title/caption, when applicable
+- Apply Suggestion button, when a correction is available
+- Recheck button
+
+The user must review and accept suggested changes manually. Never overwrite the title or caption silently.
+
+If the provider returns plain text instead of valid JSON, handle that gracefully. Show the concise response without crashing. Never assume the response is valid JSON.
+
+Keep the AI output concise so that requests remain lightweight.
+
+## D. MEDIA UPLOAD
+
+After the content section, let users attach media.
+
+Accepted media types:
+
+Instagram:
+- Images
+- Videos
+
+LinkedIn:
+- Images
+- Videos
+- PDF documents
+
+X:
+- Images
+- Videos
+
+Include:
+- Drag-and-drop upload area.
+- Browse Files action.
+- File name, size, and type.
+- Image preview or suitable video/PDF preview when practical.
+- Remove and replace actions.
+- Clear validation messages.
+
+Validate file extension, MIME type, and file size. Validate again on the server, not just in the frontend.
+
+Use a configurable upload-size limit and display it clearly to the user.
+
+Do not pretend that a video or PDF has been visually analysed when only image analysis is available.
+
+## E. AI CHECK IMAGE
+
+For an attached image, provide a separate AI CHECK IMAGE action.
+
+Use the same FreeLLM-compatible API endpoint and authentication method described above.
+
+For image analysis, use the OpenAI-compatible multimodal request format demonstrated by my working example.
+
+The user message must contain:
+- A concise image-review prompt.
+- An image_url content part containing a valid base64 data URI, for example:
+
+{
+  "type": "image_url",
+  "image_url": {
+    "url": "data:image/jpeg;base64,ACTUAL_BASE64_IMAGE_DATA"
+  }
+}
+
+The image MIME type and data URI must match the actual uploaded image. Do not label every image as JPEG regardless of its format.
+
+The prompt must include the post title, caption/details, selected platform, role, and applicable starter guidelines.
+
+Use this analysis instruction:
+
+"You are BrandLens, an image content assistant. Analyze the supplied image for the proposed social media or marketing post. Judge only what is visible in the image and the supplied post context. Explain in one or two simple sentences what the image communicates and whether it looks suitable for this post. Give one short, practical improvement if needed; if the image already looks suitable, suggest one optional improvement. Do not invent details, brand assets, text, or facts that are not visible. Do not produce lengthy explanations, scores, hashtags, or extra sections."
+
+Ask the API for a compact structured response:
+
+{
+  "verdict": "looks_good | changes_suggested | needs_attention",
+  "briefAnalysis": "One or two sentences",
+  "suggestion": "One short practical improvement",
+  "issues": []
+}
+
+Display the image preview alongside the result when appropriate.
+
+The user should be able to run image review separately from text review. One review must not overwrite the other.
+
+If a file is not an image, disable the image review action and explain that image review currently supports images only.
+
+If the API returns an error, timeout, rate limit, or unreadable result, show a helpful error and preserve the existing post form contents.
+
+## F. GENERATE IMAGE — CONNECT MY IMAGE GENERATOR
+
+Add a GENERATE IMAGE button to the New Post page.
+
+Use this two-step pipeline:
+
+STEP 1 — Generate an image prompt using the same FreeLLM-compatible API.
+
+Send:
+- Title.
+- Caption/details.
+- Selected platform.
+- Current user's role.
+- Relevant role-specific guidelines.
+
+Ask the model:
+
+"Create one concise visual-generation prompt for a social media image that supports the supplied post. Use the post title and details to understand its meaning. Make the visual coherent, polished, and appropriate for the selected platform and role guidelines. Do not invent factual claims, brand assets, or unsupported product details. Avoid readable text, logos, and watermarks unless explicitly required by the provided post. Return only the final image-generation prompt, with no explanation or quotation marks. Keep the prompt brief and specific."
+
+Request one short prompt, ideally around 40–80 words.
+
+Do not send the original long title/caption directly to the image API as a replacement for this prompt-generation step. The image prompt must first be generated through my LLM API.
+
+STEP 2 — Request an image from my existing image-generator endpoint:
+
+https://ai-image.ayushbhai1818.workers.dev/
+
+Call it using HTTP GET with query parameters:
+- prompt = the generated visual prompt
+- key = the configured image-generator key value
+
+The URL should be constructed safely using URL and URLSearchParams, so spaces, ampersands, punctuation, and non-English characters in the prompt are encoded correctly.
+
+My current example uses the query parameter key=invalid. Keep the key configurable through the server-side environment variable IMAGE_GEN_KEY, using "invalid" only if that is genuinely the required current value.
+
+Never hardcode a real secret in frontend JavaScript. Do not expose the configured key in client-side requests, logs, error messages, or returned API payloads.
+
+My image generator returns an image directly. Handle successful image responses as binary image data, respecting the returned MIME type.
+
+If the service returns a redirect or a clearly defined JSON image response instead, handle it when the returned format can be identified reliably. If it returns an error or an unsupported response, report the failure rather than showing a fake image.
+
+### Generated image workflow
+
+After image generation:
+- Show a preview inside the post editor.
+- Allow the user to keep, remove, or replace the generated image.
+- Let the generated image be saved as the post's selected media.
+- Allow the user to run AI CHECK IMAGE on the generated image as a separate step.
+
+Do not automatically approve generated images. They must remain reviewable by the user.
+
+If title or caption/details is missing, explain what is needed before generation.
+
+Show meaningful loading progress, timeout handling, and useful error messages. Never block the whole page while waiting for the API.
+
+Do not fabricate generated images or pretend the API succeeded if it failed.
+
+# 6. BACKEND API AND SECRETS
+
+The FreeLLM and image-generation APIs must be called from the server-side integration layer, not directly from browser JavaScript.
+
+Use the existing backend architecture and route conventions wherever possible.
+
+If the current application already has a backend, add the required endpoints to it without replacing the existing server.
+
+If there is no backend, introduce the smallest compatible server-side API layer supported by the existing project. Do not migrate to a different framework just for convenience.
+
+Create or reuse routes equivalent to:
+
+POST /api/ai/check-text
+POST /api/ai/check-image
+POST /api/ai/generate-image
+POST /api/posts
+GET /api/posts
+GET /api/posts/:id
+PUT /api/posts/:id
+GET /api/posts/:id/activity
+
+Adapt route names as necessary to the existing architecture, but keep the responsibilities separated.
+
+Required environment configuration:
+
+FREELLM_API_KEY=replace_with_your_rotated_key
+FREELLM_API_URL=https://invalid-ayush-llm.onrender.com/v1/chat/completions
+IMAGE_GEN_URL=https://ai-image.ayushbhai1818.workers.dev/
+IMAGE_GEN_KEY=invalid
+MAX_UPLOAD_MB=25
+
+These are example configuration entries, not actual credentials. The application's server must read the environment variables at runtime.
+
+Requirements:
+- Create a safe .env.example containing placeholders, never the real FreeLLM API key.
+- Ensure .env and uploaded secret/config files are excluded by .gitignore.
+- Never hardcode API keys into frontend files.
+- Never print Authorization headers or keys into logs.
+- Never return raw provider errors that could reveal credentials.
+- Validate requests and uploads.
+- Use explicit request timeouts and clear error handling.
+- Handle HTTP 401/403, 429, 5xx errors, timeouts, invalid JSON, missing choices, and unsupported responses gracefully.
+- Avoid unlimited retries or repeated image-generation calls.
+- The interface must remain usable when an AI provider is temporarily unavailable.
+
+For an image-analysis request, read the actual server-side uploaded image, convert the bytes to base64, build the correct MIME-specific data URI, and send it through the supported image_url message structure. Do not use a local file path in a remote API request.
+
+If the existing execution environment genuinely cannot support the needed secure server-side calls, explain that limitation and implement no insecure client-side API-key workaround.
+
+# 7. PERSISTENT DATABASE AND MEDIA STORAGE
+
+Posts must be saved in a real persistent database, not only frontend state or localStorage.
+
+Inspect the existing project for a database or persistence service first and reuse it when appropriate.
+
+If there is no database and the environment supports a persistent server, use a small, maintainable SQLite setup for this development phase.
+
+Persist these post fields:
+- id
+- authorUsername
+- authorRole
+- platform
+- title
+- caption
+- status
+- selected media reference
+- media type
+- text review result
+- image review result
+- issue count or unresolved findings
+- createdAt
+- updatedAt
+
+Persist a post activity/history record with:
+- id
+- postId
+- actorUsername
+- eventType
+- description
+- createdAt
+
+Create meaningful activity events when they actually occur:
+- Post created
+- Text review completed
+- Image review completed
+- Image generated
+- Post updated
+
+Do not create activity events for actions that did not happen.
+
+Store media through server-managed file storage or an existing storage service. Save stable media references in the database rather than storing large image base64 strings in the post records.
+
+Generated images must also persist as media files/references so they remain available after refreshing the page.
+
+Use safe unique filenames, validate uploads, and prevent path traversal. Do not execute uploaded files.
+
+If the deployment uses an ephemeral filesystem and SQLite/files would not persist reliably across deployments, reuse an existing persistent database/storage service where available or document the limitation clearly. Do not claim durable storage when it is not available.
+
+# 8. SAVE AS PENDING
+
+At the bottom of the New Post workflow, provide:
+- SAVE AS PENDING
+- CANCEL
+
+When Save as Pending is clicked:
+- Validate required title, caption/details, and platform.
+- Persist the record in the database.
+- Associate it with the currently logged-in username and role.
+- Save the media reference when media is attached.
+- Save available text/media review results.
+- Save creation and update timestamps.
+- Create an activity record.
+- Set status to Pending.
+
+After the database confirms success:
+- Show a success message.
+- Update all dashboard metrics.
+- Add the record to Pending.
+- Add the record to History.
+- Update Total Posts.
+- Update Issues Found when appropriate.
+- Make the saved record accessible for details and editing.
+
+Prevent duplicate submissions from rapid repeated clicks.
+
+If the save fails, preserve the user's input and display a clear error. Never show success before the database confirms that the operation succeeded.
+
+AI review must NOT be mandatory for saving a valid post. If the user has not configured or run an AI review, they can still save the post as Pending.
+
+A post can be saved with review findings, but those findings must remain visible.
+
+If the title or caption is edited after a review, mark the old result as stale or requiring recheck. Do not pretend the previous review verified the modified content.
+
+# 9. PENDING PAGE
+
+List all posts belonging to the current user with status Pending.
+
+Each item should show:
+- Title
+- Platform
+- Date created
+- Author role
+- Text/media review status
+- Unresolved issue count
+- View/Edit action
+
+Clicking an item should open its details view, showing:
+- Title and caption/details
+- Selected platform
+- Attached media preview
+- Available AI review results
+- Current status
+- Created and updated timestamps
+- Activity history where useful
+
+Allow editing and saving updates while keeping the post Pending.
+
+Do not implement real publishing to Instagram, LinkedIn, or X yet.
+
+Do not add a functional Publish button or falsely claim that content has been published. The social publishing integration is a future phase.
+
+# 10. HISTORY PAGE
+
+History must show the current user's persisted post records, including Pending posts.
+
+Add:
+- Search by title
+- Filter by platform
+- Filter by status
+- Created/updated dates
+- View and Edit actions
+
+A post should display its latest saved content, media reference, available review results, and activity history.
+
+Persist all records so they remain after a browser refresh or reopening the application.
+
+Do not create a fake history made only from temporary in-memory arrays.
+
+# 11. DATA ISOLATION
+
+Use the current user's demo identity to scope ordinary dashboard, Pending, and History queries.
+
+Employee must not accidentally see Manager or Administrator posts in their personal dashboard. The same applies to the other two accounts.
+
+Keep role guideline selection central and predictable.
+
+Important: since the current accounts are demo-only, do not represent client-provided usernames or roles as production-secure authentication. Document the need for real server-side authentication and authorization before production deployment.
+
+# 12. METRIC AND ISSUE DEFINITIONS
+
+Keep the four dashboard metric counts based on persisted data.
+
+Total Posts = all posts owned by the current user.
+
+Pending = owned posts with status Pending.
+
+Published = owned posts whose published status is actually confirmed. Do not count saved Pending posts as published.
+
+Issues Found = owned posts with unresolved review findings from the latest applicable review results.
+
+Make the counting rules consistent across metric cards, filtered lists, and post details.
+
+Do not let old review results silently appear current after the post has changed.
+
+# 13. HELP AND ABOUT
+
+Keep Help and About in the sidebar but disabled or labelled Coming Soon.
+
+Do not implement their full pages in this phase.
+
+# 14. CLEAN IMPLEMENTATION
+
+Reuse the existing framework, styling, and dependencies.
+
+Organize the additions into maintainable modules for:
+- Dashboard and metric cards
+- New Post editor
+- History and Pending
+- Role guideline configuration
+- AI service integration
+- Database access and API routes
+- Upload and media storage
+- Post models/types
+- Existing authentication utilities
+
+Do not duplicate the same provider API call in multiple frontend components. Keep provider-specific calls in the server-side AI service layer.
+
+Use the existing package manager and package configuration. Do not use --force or --legacy-peer-deps to hide dependency conflicts.
+
+Avoid unrelated refactoring. Keep changes scoped to this phase.
+
+# 15. FINAL VERIFICATION CHECKLIST
+
+Before finishing, run the existing application and verify the following:
+
+1. The original BrandLens landing page and cinematic intro still work.
+2. The existing colour palette and typography remain intact.
+3. Employee, Manager, and Administrator can log in using their respective demo credentials.
+4. The same dashboard layout appears for all three roles.
+5. Dashboard post data is scoped to the current demo user.
+6. All four metric cards filter the list correctly.
+7. Text analysis sends the actual title, caption, platform, role, and guidelines to my configured API.
+8. Image analysis sends the selected image with a correct MIME-specific base64 data URI.
+9. Image generation first obtains a short visual prompt from my LLM API and then calls my image-generation endpoint.
+10. AI responses and provider errors are handled without crashing the page.
+11. AI requests never expose the FreeLLM API key to browser JavaScript.
+12. A valid post can be saved as Pending without an AI review.
+13. Saved posts appear in Pending and History.
+14. Dashboard counts update after save and edit.
+15. Data and uploaded/generated media persist after refreshing the page when the configured storage supports persistence.
+16. Editing reviewed content marks old review results stale or needing recheck.
+17. Account data does not mix between the three demo users.
+18. Logout returns to the existing login screen.
+19. No fake publishing integration has been added.
+20. Help and About remain Coming Soon.
+21. No existing landing-page functionality was broken.
+22. There are no compile errors, dead buttons, fake API success messages, or unnecessary dependency changes.
+
+Implement the actual changes rather than returning only a plan or static mockup. Run and test the available application flows.
+
+At the end, briefly report:
+- What was implemented.
+- Which API integrations were actually tested.
+- Which environment variables still need to be configured.
+- Any real infrastructure limitation that prevents persistence or live requests.
+
+Do not claim an integration was tested if it was not actually tested.
+
+SCOPE: This phase covers the existing landing/login, dashboard, new post creation, text and image reviews, prompt-based image generation, Pending, History, and persistence. Do not build Help/About pages, real social publishing, or advanced features yet.

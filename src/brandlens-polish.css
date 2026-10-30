@@ -1,0 +1,921 @@
+/* ==========================================================================
+   BRANDLENS — PROFESSIONAL POLISH LAYER  v2
+   Audited against existing index.css (6,627 lines) to avoid any duplication.
+   Adds only: missing micro-interactions, depth shadows, ambient life,
+   and refined visual consistency. Zero layout/color/logic changes.
+   ========================================================================== */
+
+/* ── Extra CSS variables (additive only) ────────────────────────────────── */
+:root {
+  --shadow-lift:     0 4px 20px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.3);
+  --shadow-lift-lg:  0 8px 36px rgba(0,0,0,0.65), 0 0 0 1px rgba(166,139,255,0.15), 0 0 28px -8px rgba(166,139,255,0.22);
+  --trans-btn:       0.22s cubic-bezier(0.2, 0.75, 0.2, 1);
+  --trans-card:      0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   1. TEXT SELECTION — brand-colored
+   ───────────────────────────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(166, 139, 255, 0.26);
+  color: #fff;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   2. FOCUS VISIBLE — unified accessible ring (index.css has none globally)
+   ───────────────────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 1.5px solid rgba(166, 139, 255, 0.65);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   3. SIDEBAR NAV BUTTONS — slide-right micro-motion on hover
+      (CEO nav already has translateX but no transition property set explicitly)
+   ───────────────────────────────────────────────────────────────────────────── */
+[data-tour-id^="nav-"],
+[data-tour-id^="ceo-nav-"] {
+  transition:
+    background   var(--trans-btn),
+    color        var(--trans-btn),
+    border-color var(--trans-btn),
+    box-shadow   var(--trans-btn),
+    transform    0.15s cubic-bezier(0.2, 0.75, 0.2, 1) !important;
+  will-change: transform;
+}
+[data-tour-id^="nav-"]:hover,
+[data-tour-id^="ceo-nav-"]:hover {
+  transform: translateX(3px);
+}
+[data-tour-id^="nav-"]:active,
+[data-tour-id^="ceo-nav-"]:active {
+  transform: translateX(2px) scale(0.98);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   4. ALL BUTTONS — unified press feel (active scale)
+      (index.css sets hover states but not :active scale on most buttons)
+   ───────────────────────────────────────────────────────────────────────────── */
+.ceo-nav-btn:active,
+.nav-enter:active,
+.sign-in:active,
+.enter-btn:active,
+.auth-tab:active,
+.detail-link:active {
+  transform: scale(0.97) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   5. INPUT FOCUS — add subtle violet glow ring (augments existing border change)
+   ───────────────────────────────────────────────────────────────────────────── */
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  box-shadow: 0 0 0 3px rgba(166,139,255,0.10), 0 0 18px rgba(166,139,255,0.08) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   6. GLASS PANELS — top-edge highlight for realism
+   ───────────────────────────────────────────────────────────────────────────── */
+.ceo-sidebar,
+.login-panel,
+.auth-card,
+.brandlens-governance-modal {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.07) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   7. CEO SIDEBAR — animated gradient right border
+   ───────────────────────────────────────────────────────────────────────────── */
+.ceo-sidebar {
+  position: relative;
+}
+.ceo-sidebar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    transparent       0%,
+    rgba(166,139,255,0.18) 25%,
+    rgba(156,236,255,0.14) 50%,
+    rgba(166,139,255,0.18) 75%,
+    transparent       100%
+  );
+  pointer-events: none;
+  animation: bl-sidebar-border 8s ease-in-out infinite alternate;
+}
+@keyframes bl-sidebar-border {
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   8. CEO BRAND LOGO — breathing glow (logo area at top of sidebar)
+   ───────────────────────────────────────────────────────────────────────────── */
+.ceo-brand-icon,
+.brandmark {
+  animation: bl-logo-breathe 5s ease-in-out infinite;
+}
+@keyframes bl-logo-breathe {
+  0%, 100% { filter: drop-shadow(0 0 5px rgba(166,139,255,0.22)); }
+  50%       { filter: drop-shadow(0 0 14px rgba(166,139,255,0.52)); }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   9. STATUS DOT — enhanced layered glow (overrides existing simpler version)
+   ───────────────────────────────────────────────────────────────────────────── */
+.status-dot {
+  animation: bl-status-glow 2.8s ease-in-out infinite !important;
+}
+@keyframes bl-status-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(164,230,207,0), 0 0 8px rgba(164,230,207,0.5);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(164,230,207,0.08), 0 0 18px rgba(164,230,207,0.7);
+    transform: scale(1.18);
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   10. TOPBAR WORDMARK ICON — gentle pulse glow
+   ───────────────────────────────────────────────────────────────────────────── */
+.wordmark-icon {
+  animation: bl-wordmark-glow 6s ease-in-out infinite;
+}
+@keyframes bl-wordmark-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(166,139,255,0.18); }
+  50%       { box-shadow: 0 0 22px rgba(166,139,255,0.48), 0 0 40px rgba(156,236,255,0.1); }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   11. HORIZONTAL DIVIDERS — gradient hairlines (overrides bare hr)
+   ───────────────────────────────────────────────────────────────────────────── */
+hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(166,139,255,0.22) 30%,
+    rgba(156,236,255,0.28) 50%,
+    rgba(166,139,255,0.22) 70%,
+    transparent 100%
+  );
+  margin: 1rem 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   12. EMPLOYEE / TEAM DIRECTORY ROWS — animated left accent bar
+   ───────────────────────────────────────────────────────────────────────────── */
+.team-row-interactive {
+  position: relative;
+  overflow: hidden;
+  transition: background-color var(--trans-btn), box-shadow var(--trans-btn);
+}
+.team-row-interactive::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--violet), var(--cyan));
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform var(--trans-card);
+  border-radius: 0 2px 2px 0;
+}
+.team-row-interactive:hover::before {
+  transform: scaleY(1);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   13. CEO ACTIVE NAV — animated violet left bar (supplements existing .active bg)
+   ───────────────────────────────────────────────────────────────────────────── */
+.ceo-nav-btn.active {
+  position: relative;
+}
+.ceo-nav-btn.active::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 18%;
+  height: 64%;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--violet), var(--cyan));
+  box-shadow: 0 0 8px rgba(166,139,255,0.7);
+  animation: bl-nav-bar-glow 3s ease-in-out infinite;
+}
+@keyframes bl-nav-bar-glow {
+  0%, 100% { box-shadow: 0 0 6px rgba(166,139,255,0.5); opacity: 0.85; }
+  50%       { box-shadow: 0 0 14px rgba(156,236,255,0.7); opacity: 1; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   14. FLOATING FEATURE CARDS on landing — depth on hover
+       (already has translateY(-5px); we add the box-shadow transition)
+   ───────────────────────────────────────────────────────────────────────────── */
+.feature {
+  transition: transform var(--trans-card), box-shadow var(--trans-card), border-color var(--trans-card) !important;
+}
+.feature:hover {
+  box-shadow: var(--shadow-lift-lg) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   15. ROLE CARDS — depth enhancement
+   ───────────────────────────────────────────────────────────────────────────── */
+.about-role-card,
+.about-concept-card,
+.about-flow-card {
+  transition: transform var(--trans-card), box-shadow var(--trans-card), border-color var(--trans-card) !important;
+}
+.about-role-card:hover,
+.about-concept-card:hover,
+.about-flow-card:hover {
+  box-shadow: var(--shadow-lift-lg) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   16. DEMO ROW — already has translateX(2px), add box-shadow on hover
+   ───────────────────────────────────────────────────────────────────────────── */
+.demo-row {
+  transition: background var(--trans-btn), transform var(--trans-btn), box-shadow var(--trans-btn) !important;
+}
+.demo-row:hover {
+  box-shadow: 0 0 0 1px rgba(166,139,255,0.2) inset !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   17. MODAL BACKDROP — blur-in animation
+   ───────────────────────────────────────────────────────────────────────────── */
+.auth-backdrop.open,
+.brandlens-portal-backdrop {
+  animation: bl-backdrop-in 0.22s ease both;
+}
+@keyframes bl-backdrop-in {
+  from { backdrop-filter: blur(0px); opacity: 0; }
+  to   { backdrop-filter: blur(8px); opacity: 1; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   18. TOAST / ALERT — slide-up with spring
+   ───────────────────────────────────────────────────────────────────────────── */
+[role="alert"],
+[class*="toast"] {
+  animation: bl-toast-rise 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes bl-toast-rise {
+  from { opacity: 0; transform: translateY(14px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   19. KEYBOARD / CODE TAGS — refined monospace styling
+   ───────────────────────────────────────────────────────────────────────────── */
+kbd {
+  background: rgba(166,139,255,0.09);
+  border: 1px solid rgba(166,139,255,0.2);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82em;
+  color: rgba(156,236,255,0.85);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   20. REVEAL ELEMENTS — add perspective for extra depth feeling
+   ───────────────────────────────────────────────────────────────────────────── */
+.ref-section {
+  perspective: 1200px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   21. CEO TOPBAR — shimmer separator line at bottom
+   ───────────────────────────────────────────────────────────────────────────── */
+.ceo-topbar {
+  position: relative;
+}
+.ceo-topbar::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(166,139,255,0.28) 30%,
+    rgba(156,236,255,0.35) 50%,
+    rgba(166,139,255,0.28) 70%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   22. LANDING TOPBAR — transition for scroll state
+   ───────────────────────────────────────────────────────────────────────────── */
+.landing-topbar {
+  transition: background var(--trans-card), box-shadow var(--trans-card), border-color var(--trans-card) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   23. SECTION DIVIDER — animated shimmer
+   ───────────────────────────────────────────────────────────────────────────── */
+.section-divider {
+  position: relative;
+  overflow: hidden;
+}
+.section-divider::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  animation: bl-divider-shine 4s ease-in-out infinite;
+}
+@keyframes bl-divider-shine {
+  0%   { left: -60%; }
+  100% { left: 160%; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   24. AMBIENT BODY BACKGROUND — slow breathing (additive opacity animation)
+   ───────────────────────────────────────────────────────────────────────────── */
+body::before {
+  animation: bl-ambient-breathe 18s ease-in-out infinite alternate;
+}
+@keyframes bl-ambient-breathe {
+  0%   { opacity: 0.82; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.88; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   25. COMPANY SWITCHER — hover lift
+   ───────────────────────────────────────────────────────────────────────────── */
+.company-switcher {
+  transition: border-color var(--trans-btn), box-shadow var(--trans-btn), transform var(--trans-btn) !important;
+}
+.company-switcher:hover {
+  border-color: rgba(166,139,255,0.3) !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4), 0 0 0 1px rgba(166,139,255,0.15) !important;
+  transform: translateY(-1px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   26. MINI STATUS CHIPS (.pass / .check) — refined glow
+   ───────────────────────────────────────────────────────────────────────────── */
+.mini-status.pass {
+  box-shadow: 0 0 8px rgba(74,222,128,0.2);
+}
+.mini-status.check {
+  box-shadow: 0 0 8px rgba(251,191,36,0.2);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   27. LIVE PILL — brighter animated dot
+   ───────────────────────────────────────────────────────────────────────────── */
+.live-pill {
+  box-shadow: 0 0 10px rgba(74,222,128,0.22);
+  animation: bl-live-pulse 2.5s ease-in-out infinite;
+}
+@keyframes bl-live-pulse {
+  0%, 100% { box-shadow: 0 0 6px rgba(74,222,128,0.15); }
+  50%       { box-shadow: 0 0 14px rgba(74,222,128,0.38); }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   28. ROLE PILL — glass shine
+   ───────────────────────────────────────────────────────────────────────────── */
+.role-pill {
+  position: relative;
+  overflow: hidden;
+}
+.role-pill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.4s ease;
+  pointer-events: none;
+}
+.role-pill:hover::after {
+  left: 150%;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   29. SECTION TAG (eyebrow labels) — subtle left line accent
+   ───────────────────────────────────────────────────────────────────────────── */
+.section-tag::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--violet), var(--cyan));
+  margin-right: 8px;
+  vertical-align: middle;
+  opacity: 0.7;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   30. GLOW CARD — improve hover transition speed
+   ───────────────────────────────────────────────────────────────────────────── */
+.glow-card {
+  transition: border-color var(--trans-card), box-shadow var(--trans-card), transform var(--trans-card) !important;
+}
+.glow-card:hover {
+  transform: translateY(-1px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   31. AUTH CARD — shimmer topline on .open
+   ───────────────────────────────────────────────────────────────────────────── */
+.login-panel::before,
+.auth-card::before {
+  background-size: 200% 100%;
+  animation: bl-topline-shimmer 4s ease-in-out infinite;
+}
+@keyframes bl-topline-shimmer {
+  0%   { background-position: 100% 0; }
+  50%  { background-position:   0% 0; }
+  100% { background-position: 100% 0; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   32. SIDEBAR BOTTOM HELP TEXT — subtle separator
+   ───────────────────────────────────────────────────────────────────────────── */
+.sidebar-bottom {
+  position: relative;
+}
+.sidebar-bottom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(166,139,255,0.18) 40%,
+    rgba(156,236,255,0.18) 60%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   33. OPTICAL BRACKETS on hero — enhanced pulse
+   ───────────────────────────────────────────────────────────────────────────── */
+.optical-bracket {
+  animation: bl-bracket-pulse 6s ease-in-out infinite alternate;
+}
+@keyframes bl-bracket-pulse {
+  from { opacity: 0.18; }
+  to   { opacity: 0.38; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   34. GRAIN DOT ambient particles — slightly more visible
+   ───────────────────────────────────────────────────────────────────────────── */
+.grain-dot {
+  box-shadow: 0 0 8px rgba(156,236,255,0.9);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   35. FLOAT CARD on hero — enhanced glow shadow
+   ───────────────────────────────────────────────────────────────────────────── */
+.float-card {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.08) !important;
+  transition: box-shadow var(--trans-card), transform var(--trans-card) !important;
+}
+.float-card:hover {
+  box-shadow: 0 12px 40px rgba(0,0,0,0.65), 0 0 0 1px rgba(166,139,255,0.2), 0 0 28px -8px rgba(166,139,255,0.25), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   36. CTA BUTTON — enhanced press + glow on hover
+       (.enter-btn already has translateY, we add glow)
+   ───────────────────────────────────────────────────────────────────────────── */
+.enter-btn:hover,
+.primary-cta:hover {
+  box-shadow: 0 6px 24px rgba(166,139,255,0.28), 0 2px 8px rgba(0,0,0,0.35) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   37. PHOTO / IMAGE containers — slight border on hover
+   ───────────────────────────────────────────────────────────────────────────── */
+[class*="avatar"],
+[class*="company-avatar"],
+.company-avatar {
+  transition: box-shadow var(--trans-btn), transform var(--trans-btn) !important;
+}
+[class*="avatar"]:hover,
+.company-avatar:hover {
+  box-shadow: 0 0 0 2px rgba(166,139,255,0.45), 0 0 12px rgba(166,139,255,0.2) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   38. LIGHT STREAK — slightly brighter
+   ───────────────────────────────────────────────────────────────────────────── */
+.light-streak {
+  background: linear-gradient(transparent, rgba(156,236,255,0.35), transparent) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   39. SCROLL TO TOP / ANCHOR LINKS — smooth (already set on html, reinforce)
+   ───────────────────────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   40. FOOTER — glass topline
+   ───────────────────────────────────────────────────────────────────────────── */
+.landing-footer {
+  position: relative;
+}
+.landing-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(166,139,255,0.2) 30%,
+    rgba(156,236,255,0.25) 50%,
+    rgba(166,139,255,0.2) 70%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+
+/* ==========================================================================
+   LANDING PAGE ENHANCEMENT LAYER  v1
+   Professional polish for all landing sections.
+   All @keyframes prefixed bl-lp- to avoid conflicts.
+   ========================================================================== */
+
+/* ── Keyframes ─────────────────────────────────────────────────────────────── */
+@keyframes bl-lp-word-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-3px); }
+}
+@keyframes bl-lp-dot-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); box-shadow: 0 0 0 0 rgba(166,139,255,0.5); }
+  50%      { opacity: 1;   transform: scale(1.3); box-shadow: 0 0 0 5px rgba(166,139,255,0); }
+}
+@keyframes bl-lp-lens-glow {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 0.7;  }
+}
+@keyframes bl-lp-sep-glow {
+  0%, 100% { color: rgba(166,139,255,0.55); text-shadow: 0 0 6px rgba(166,139,255,0.3); }
+  50%      { color: rgba(156,236,255,0.85); text-shadow: 0 0 12px rgba(156,236,255,0.5); }
+}
+@keyframes bl-lp-about-topline {
+  0%   { transform: scaleX(0); opacity: 0; }
+  100% { transform: scaleX(1); opacity: 1; }
+}
+@keyframes bl-lp-detail-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+@keyframes bl-lp-cta-glow {
+  0%, 100% { opacity: 0.28; transform: scale(1); }
+  50%      { opacity: 0.42; transform: scale(1.06); }
+}
+@keyframes bl-lp-footer-hover {
+  from { width: 0; opacity: 0; }
+  to   { width: 100%; opacity: 1; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   41. HERO — visual stage depth glow
+   ───────────────────────────────────────────────────────────────────────────── */
+.visual-stage {
+  position: relative;
+}
+.visual-stage::before {
+  content: '';
+  position: absolute;
+  inset: -18%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(166,139,255,0.07) 0%,
+    rgba(156,236,255,0.04) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  animation: bl-lp-lens-glow 4s ease-in-out infinite;
+  z-index: 0;
+}
+.lens-art {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   42. HERO — word stagger float on hover
+   ───────────────────────────────────────────────────────────────────────────── */
+.ref-hero-copy h1 .w {
+  display: inline-block;
+  will-change: transform;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+.ref-hero-copy h1:hover .w {
+  animation: bl-lp-word-float 1.8s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.08s);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   43. HERO — note dot pulse
+   ───────────────────────────────────────────────────────────────────────────── */
+.note-dot {
+  animation: bl-lp-dot-pulse 2.4s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   44. MARQUEE — gradient fade masks on edges
+   ───────────────────────────────────────────────────────────────────────────── */
+.marquee {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0,0,0,0.7) 8%,
+    #000 20%,
+    #000 80%,
+    rgba(0,0,0,0.7) 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0,0,0,0.7) 8%,
+    #000 20%,
+    #000 80%,
+    rgba(0,0,0,0.7) 92%,
+    transparent 100%
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   45. MARQUEE — separator ✦ glow pulse
+   ───────────────────────────────────────────────────────────────────────────── */
+.track b {
+  display: inline-block;
+  animation: bl-lp-sep-glow 3s ease-in-out infinite;
+}
+.track b:nth-child(3n+1) { animation-delay: 0s; }
+.track b:nth-child(3n+2) { animation-delay: 1s; }
+.track b:nth-child(3n+3) { animation-delay: 2s; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   46. FEATURE CARDS — number gradient text
+   ───────────────────────────────────────────────────────────────────────────── */
+.feature-num {
+  background: linear-gradient(135deg, #a68bff 0%, #9cecff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   47. FEATURE CARDS — SVG symbol stroke animation on hover
+   ───────────────────────────────────────────────────────────────────────────── */
+.feature:hover .feature-symbol svg {
+  filter: drop-shadow(0 0 6px rgba(166,139,255,0.6));
+  transition: filter 0.35s ease;
+}
+.feature:hover .feature-symbol svg path,
+.feature:hover .feature-symbol svg circle,
+.feature:hover .feature-symbol svg rect,
+.feature:hover .feature-symbol svg line,
+.feature:hover .feature-symbol svg polyline {
+  stroke: #9cecff;
+  transition: stroke 0.35s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   48. WORKFLOW STEPS — step number gradient
+   ───────────────────────────────────────────────────────────────────────────── */
+.step-num {
+  background: linear-gradient(135deg, #a68bff 0%, #9cecff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 700;
+}
+.step.active .step-num {
+  text-shadow: none; /* gradient text disables text-shadow */
+  filter: drop-shadow(0 0 8px rgba(166,139,255,0.65));
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   49. WORKFLOW STEPS — arrow nudge on hover
+   ───────────────────────────────────────────────────────────────────────────── */
+.step-arrow {
+  transition: transform 0.25s cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+.step:hover .step-arrow {
+  transform: translateX(4px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   50. ABOUT CARDS — animated violet→cyan topline on reveal
+   ───────────────────────────────────────────────────────────────────────────── */
+.about-card {
+  position: relative;
+  overflow: visible;
+}
+.about-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 2px 2px 0 0;
+  background: linear-gradient(90deg, #a68bff 0%, #9cecff 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.about-card.in-view::before,
+.about-card:hover::before {
+  transform: scaleX(1);
+  animation: bl-lp-about-topline 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   51. ABOUT CARDS — detail link shimmer
+   ───────────────────────────────────────────────────────────────────────────── */
+.detail-link {
+  position: relative;
+  overflow: hidden;
+}
+.detail-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(166,139,255,0.18) 50%,
+    transparent 60%
+  );
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.detail-link:hover::after {
+  opacity: 1;
+  animation: bl-lp-detail-shimmer 0.65s ease forwards;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   52. FINAL CTA — radial background glow
+   ───────────────────────────────────────────────────────────────────────────── */
+.final-cta {
+  position: relative;
+  isolation: isolate;
+}
+.final-cta::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 60vw;
+  height: 60vw;
+  max-width: 640px;
+  max-height: 640px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(166,139,255,0.09) 0%,
+    rgba(156,236,255,0.05) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: -1;
+  animation: bl-lp-cta-glow 5s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   53. FINAL CTA — headline gradient text
+   ───────────────────────────────────────────────────────────────────────────── */
+.final-cta h2 {
+  background: linear-gradient(135deg, #fff 30%, #a68bff 65%, #9cecff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   54. FOOTER LINKS — violet underline grow on hover (buttons, matching <a> behavior)
+   ───────────────────────────────────────────────────────────────────────────── */
+.footer-links button {
+  position: relative;
+  display: inline-block;
+}
+.footer-links button::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, #a68bff, #9cecff);
+  border-radius: 1px;
+  transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.footer-links button:hover::after {
+  width: 100%;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   55. HERO FLOAT CARDS — depth shadow lift
+   ───────────────────────────────────────────────────────────────────────────── */
+.float-card {
+  box-shadow:
+    0 4px 24px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(166,139,255,0.1),
+    0 0 18px -4px rgba(166,139,255,0.18);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  transition:
+    box-shadow var(--trans-card),
+    transform var(--trans-card);
+}
+.float-card:hover {
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(166,139,255,0.2),
+    0 0 28px -4px rgba(166,139,255,0.3);
+  transform: translateY(-4px) scale(1.015);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   56. TOPBAR — glass blur refinement
+   ───────────────────────────────────────────────────────────────────────────── */
+.landing-topbar {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(166,139,255,0.08);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   57. PRIMARY CTA / ENTER BUTTON — hover glow ring
+   ───────────────────────────────────────────────────────────────────────────── */
+.nav-enter:hover,
+.primary-cta:hover {
+  box-shadow:
+    0 0 0 1px rgba(166,139,255,0.35),
+    0 0 18px rgba(166,139,255,0.22),
+    0 4px 16px rgba(0,0,0,0.4);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   58. FEATURE CARDS — stronger depth border glow on hover
+   ───────────────────────────────────────────────────────────────────────────── */
+.feature {
+  transition:
+    transform var(--trans-card),
+    box-shadow var(--trans-card),
+    border-color var(--trans-card);
+}
+.feature:hover {
+  border-color: rgba(166,139,255,0.28);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(166,139,255,0.15),
+    0 0 24px -8px rgba(166,139,255,0.25);
+}

@@ -1,0 +1,1174 @@
+# BRANDLENS — COMPLETE ENTERPRISE UPGRADE
+## Multi-Company SaaS + CEO Workspace + Role-Based Authentication + Company-Specific AI + Compact Prompt Generation + Guided Nova Unlimited Demo
+
+You are a senior full-stack engineer, SaaS architect, AI integration engineer, database designer, security specialist, and UI/UX designer.
+
+You are modifying my EXISTING BrandLens web application. This is an upgrade to the current project, not a request to rebuild the website from scratch.
+
+Your task is to implement a complete multi-company system in which every company has its own workspace, CEO, team members, company profile, guidelines, AI instructions, content workflows, and isolated data.
+
+The most important new requirement is that **all AI-powered features must use the correct company's saved information and guidelines**. A new company must be able to define its own identity and policies, and those settings must affect the real AI requests made during text generation, text enhancement, image generation, image review, and other supported content-related operations.
+
+Do not merely create a UI that looks functional. Implement the actual data flow from saved company details to prompt generation, persistent prompt storage, runtime AI requests, and final results.
+
+---
+
+# 1. INSPECT THE EXISTING PROJECT FIRST
+
+Before modifying files:
+
+1. Inspect the existing project structure, framework, routing, backend, database, authentication, AI clients, image-generation integration, API configuration, and environment variables.
+2. Identify all existing employee, manager, and HOD dashboard components.
+3. Identify the existing New Post, Dashboard, History, Pending, Help, About, and Enhancer features.
+4. Identify how text generation, text enhancement, image review, image generation, and PDF/DOCX text extraction currently work.
+5. Identify the existing LLM endpoint used by BrandLens and the existing image-generation API/client.
+6. Determine how current users, posts, reviews, company information, and settings are stored.
+7. Reuse working components and existing services wherever possible.
+
+Do not replace the existing project architecture without a strong technical reason.
+
+Do not delete working functionality, discard existing data, replace the styling system, or create duplicate implementations of features that already exist.
+
+Create a safe implementation plan internally, then proceed to make the changes directly. Do not stop after returning only a plan or sample code.
+
+Use the existing project conventions, data models, authentication mechanism, API clients, and UI components whenever they are suitable.
+
+If something is genuinely unavailable, identify the missing dependency and implement the remaining safe functionality without pretending the missing component works.
+
+# PART A — MULTI-COMPANY REGISTRATION AND LOGIN
+
+## 2. Authentication screen
+
+When a visitor enters BrandLens, show the existing branded entry experience followed by the login/registration interface.
+
+Preserve the existing futuristic, premium BrandLens design.
+
+The authentication screen must have two tabs:
+
+- Register Company
+- Login
+
+Select Register Company by default for the initial first-visit/demo experience.
+
+The registration and login interfaces must use the existing typography, colors, spacing, animations, buttons, form controls, and responsive layout.
+
+After successful company registration, switch to Login and prefill the registered email. Display a success message.
+
+After login, identify the authenticated user, their company, and their authorized role, then open the appropriate dashboard.
+
+Do not use a frontend-only role dropdown as authentication.
+
+## 3. Company registration
+
+Create a registration form containing:
+
+- Company Name
+- Company Category dropdown
+- Company Email
+- Password
+- Register Company button
+- Link to Login
+
+Company Category should include:
+
+- Technology
+- Education
+- Services
+- Art and Design
+- Healthcare
+- Finance
+- E-commerce
+- Media and Entertainment
+- Manufacturing
+- Consulting
+- Other
+
+The categories must be extensible.
+
+The registered company email becomes the CEO account's login identifier.
+
+Validate required fields, email format, password requirements, and duplicate company emails.
+
+If a company email already exists, guide the user to log in. Never create a duplicate company because the registration button was clicked twice.
+
+Store the company name, category, registration email, and a unique company ID in persistent storage.
+
+Company profile fields such as description, products/services, target audience, and communication style can be completed later in the CEO workspace.
+
+## 4. Login and role-based routing
+
+The Login tab must contain:
+
+- Email or unique login ID
+- Password
+- Login button
+- Link to Register Company
+
+Support these roles:
+
+- CEO
+- Employee
+- Manager
+- HOD
+
+After successful authentication:
+
+- CEO → CEO Dashboard
+- Employee → Existing Employee Dashboard
+- Manager → Existing Manager Dashboard
+- HOD → Existing HOD Dashboard
+
+The CEO has a company-management workspace and should not automatically see the regular posting dashboard.
+
+Employee, Manager, and HOD should continue using their existing role-specific dashboards.
+
+The application must determine the user's role and company from the authenticated account stored in the backend/database.
+
+Do not trust role, company ID, or account ownership sent by the browser.
+
+Enforce authorization on backend routes and database operations, not merely by hiding frontend tabs.
+
+# PART B — CEO WORKSPACE
+
+## 5. CEO navigation
+
+Create three primary CEO tabs:
+
+1. DASHBOARD
+2. ABOUT COMPANY
+3. GUIDELINES
+
+Use the existing BrandLens sidebar, visual components, dark interface, animations, and navigation conventions.
+
+Provide a visible profile/menu area and Logout button.
+
+The CEO can configure the organization, manage team accounts, edit company information, define policies, and generate updated AI prompt instructions.
+
+The CEO is not automatically a social-media content creator. Keep posting permissions consistent with the existing application unless explicitly configured otherwise.
+
+## 6. CEO Dashboard
+
+At the top of the Dashboard, display four interactive summary cards:
+
+- EMPLOYEES
+- MANAGERS
+- HODs
+- TOTAL TEAM
+
+Each count must come from stored accounts belonging to the current company.
+
+Total Team means the combined number of Employee, Manager, and HOD accounts, excluding the CEO.
+
+When a card is clicked, show the corresponding list below the cards and highlight the selected card.
+
+The lists must update after an account is created or changed.
+
+Display relevant information such as:
+
+- Name
+- Unique login ID
+- Designation
+- Account status
+
+Never display passwords in these lists.
+
+Show useful empty states when no accounts exist.
+
+## 7. Add Employee, Manager, and HOD
+
+The selected designation determines which Add button is displayed:
+
+- Add Employee
+- Add Manager
+- Add HOD
+
+Clicking the button opens a modal matching the current BrandLens styling.
+
+The modal must contain:
+
+- Full Name
+- Password
+- Create Account
+- Cancel
+
+Generate a unique company-scoped login identifier for the new user.
+
+Example Nova Unlimited demo IDs:
+
+- employee@novaunlimited.test
+- manager@novaunlimited.test
+- hod@novaunlimited.test
+
+Use suitable generated IDs for other companies and safely resolve collisions.
+
+After creation:
+
+1. Save the account.
+2. Assign the authenticated CEO's company ID.
+3. Assign the correct role.
+4. Store the password securely as a hash.
+5. Update counts and lists.
+6. Display a success message and the newly created login ID.
+7. Allow the CEO to copy the login ID if practical.
+
+Avoid duplicate submissions, duplicate users, and insecure password storage.
+
+The same company email must not be required for every employee. Each employee, manager, and HOD needs a distinct login identifier, while retaining an association with their company.
+
+# PART C — ABOUT COMPANY
+
+## 8. Company information
+
+The About Company tab must allow the CEO to save and later update:
+
+- Company Name
+- Company Category
+- Company Description
+- Products and Services
+- Target Audience
+- Brand Voice and Communication Style
+- Approved terminology or preferred wording, where applicable
+- Additional relevant company context
+
+Prefill Name and Category from registration.
+
+Save the data persistently against the correct company ID.
+
+Reload the previously saved information when the CEO returns.
+
+Provide Edit/Update and Save Changes actions.
+
+Validate the form and show clear success/error states.
+
+Never overwrite previously saved user information with onboarding defaults.
+
+## 9. Nova Unlimited company example
+
+Use Nova Unlimited as the preconfigured technology/server/hosting example for the guided demo.
+
+Suggested demo description:
+
+"Nova Unlimited is a technology-focused service provider specializing in server and hosting solutions. Its communications should focus on hosting services, infrastructure, technical support, service features, and information verified by the company."
+
+This is sample demo information, not proof of real-world service guarantees.
+
+For first-time onboarding, reveal suggestions using subtle typing or fade-in animations.
+
+The CEO can edit the suggested description and save it.
+
+The saved About Company information must become a real input to the company's AI personalization system described later in this prompt.
+
+# PART D — GUIDELINES
+
+## 10. Company-wide guidelines
+
+The CEO's Guidelines tab must support editable and persistent company-wide rules, including:
+
+- Brand identity and positioning
+- Approved description of products and services
+- Communication style and brand voice
+- Approved terminology
+- Facts and claims that may be used
+- Claims that require evidence or approval
+- Confidentiality and privacy rules
+- Prohibited or restricted topics
+- Topics requiring escalation or human approval
+
+Do not treat these as static examples only. Every company must be able to edit its own policy.
+
+## 11. Role-specific guidelines
+
+Provide separate editable sections for:
+
+### Employee Guidelines
+Define what employees can communicate, what they must verify, and which posts must go through review.
+
+### Manager Guidelines
+Define the responsibilities of managers for checking content, requesting revisions, ensuring consistency, and escalating specialist issues.
+
+### HOD Guidelines
+Define department-level or specialist review responsibilities, technical checks, and the types of claims requiring further authorization.
+
+The actual permissions must respect the application's existing workflow. Do not assume an HOD has unlimited publishing authority.
+
+### Post-type and platform-specific guidelines
+Where supported, allow the CEO to define extra rules for content such as:
+
+- LinkedIn company updates
+- Instagram promotional content
+- Facebook content
+- X posts
+- Product/service announcements
+- Hiring posts
+- Technical updates
+- Campaigns and advertisements
+
+Keep these rules editable and stored per company.
+
+## 12. Example Nova Unlimited guidelines
+
+Seed the demo with the following starting rules:
+
+Company-wide:
+- Keep communication clear, professional, and technically understandable.
+- Describe server and hosting services accurately.
+- Do not invent uptime percentages, prices, performance guarantees, certifications, customer numbers, or other unsupported claims.
+- Use only verified company information for factual claims.
+- Never reveal confidential customer or infrastructure data.
+- Escalate uncertain or sensitive claims to human review.
+
+Employee:
+- Draft company-relevant content.
+- Use approved facts and terminology.
+- Avoid unsupported promises.
+- Submit content for the required review.
+
+Manager:
+- Review clarity, relevance, and compliance.
+- Request corrections where needed.
+- Escalate unsupported technical claims.
+- Do not approve claims lacking adequate evidence.
+
+HOD:
+- Review content requiring specialist knowledge.
+- Check factual and technical accuracy where evidence is available.
+- Escalate unclear or sensitive claims.
+- Follow the existing review and approval workflow.
+
+Allow the CEO to edit all these rules.
+
+# PART E — CRITICAL NEW REQUIREMENT: COMPANY-SPECIFIC AI PERSONALIZATION
+
+## 13. Every company must have its own AI behavior
+
+This is a core functional requirement.
+
+BrandLens must not use one fixed generic AI prompt for every customer.
+
+The AI behavior for each company must be derived from that company's saved:
+
+1. About Company information
+2. Company category
+3. Products and services
+4. Target audience
+5. Brand voice and communication style
+6. Company-wide guidelines
+7. Employee guidelines
+8. Manager guidelines
+9. HOD guidelines
+10. Relevant post-type guidelines
+11. Relevant platform guidelines
+12. Current user's authenticated role and company association
+
+Whenever the CEO updates About Company or Guidelines, the system must update the company's compact AI instruction set.
+
+All existing supported AI features must use the updated instruction set where relevant.
+
+The flow must be:
+
+CEO saves company details or guidelines
+→ Backend stores the new company data
+→ Company configuration version is updated
+→ Existing AI API generates concise company-specific task instructions
+→ Generated instructions are validated and saved in the database
+→ Employees/Managers/HODs use the appropriate instructions while working
+→ The correct prompt is assembled for the specific task
+→ The appropriate existing AI API is called
+→ The result is returned through the existing BrandLens workflow.
+
+Do not stop at creating a prompt-preview screen. Implement the actual integration into the existing API request path.
+
+## 14. Use the existing AI API to generate compact prompts
+
+Use my project's existing configured LLM/AI API for generating the concise company-specific instruction set.
+
+First inspect the existing AI service and reuse its API client, endpoint, model configuration, error handling, environment variables, and retry logic where appropriate.
+
+Do not hard-code a new provider or invent an API endpoint.
+
+Do not create separate unnecessary API clients if the existing implementation can be extended.
+
+The compact prompt generator should take the saved company profile and guidelines as structured input and produce short, clear instructions suitable for reuse.
+
+Do not send the entire raw company description and all guidelines to every image-generation or content-generation request when a compact relevant instruction is sufficient.
+
+Generate reusable instructions for these tasks:
+
+1. TEXT_GENERATION
+2. TEXT_ENHANCEMENT
+3. TEXT_REVIEW
+4. IMAGE_GENERATION
+5. IMAGE_REVIEW
+6. DOCUMENT_TEXT_REVIEW, including text extracted from PDF/DOCX
+7. PLATFORM-specific adjustments where supported by the existing application
+8. ROLE-specific adjustments for Employee, Manager, and HOD
+
+Create task-specific instructions rather than one long instruction copied into every request.
+
+Avoid duplicating company rules across every stored prompt. Keep a compact shared company context and focused task-specific additions, then assemble only the relevant parts at runtime.
+
+The existing AI API must generate these concise instruction bundles from the actual saved company data and guidelines, not from hard-coded Nova-specific instructions.
+
+## 15. Suggested compact-prompt structure
+
+Adapt this structure to the existing data models and APIs.
+
+Store a versioned company AI prompt configuration with:
+
+- company_id
+- configuration_version
+- source_profile_version
+- source_guidelines_version
+- compact_company_context
+- role-specific instructions
+- task-specific instructions
+- platform-specific instructions, where applicable
+- prompt generation status
+- created_at
+- updated_at
+
+The compact instruction set should include separate components or equivalent structures for:
+
+### Shared company context
+A short summary of what the company does, its audience, services, brand tone, approved terminology, and essential constraints.
+
+### Employee instructions
+Short rules about the employee's permitted responsibilities and content submissions.
+
+### Manager instructions
+Short rules about review responsibilities and approvals.
+
+### HOD instructions
+Short rules about specialist checks and department-level responsibilities.
+
+### Text-generation instructions
+Short rules for producing suitable original content based on the company identity and user request.
+
+### Text-enhancement instructions
+Short rules for improving the user's draft without changing its intended meaning or violating company guidelines.
+
+### Image-generation instructions
+Short instructions defining the relevant brand style, subject, mood, allowed messaging, visual constraints, and important restrictions.
+
+### Image-review instructions
+Short rules for assessing the image's relevance to the company, brand fit, visible messaging, privacy concerns, and supported checks.
+
+### Document-review instructions
+Short rules for checking text extracted from supported PDF/DOCX files against company guidelines.
+
+### Platform-specific instructions
+Short adjustments for the selected platform, based on platform rules that are actually configured and supported by the project.
+
+These are logical components, not a requirement to create one database record for every possible combination. Design an efficient structure that can be reused.
+
+Do not regenerate every possible role × platform × task combination if shared, composable instructions would be more efficient.
+
+## 16. Prompt generation rules
+
+When the existing AI API creates compact instructions, tell it to:
+
+- Use only the supplied company profile and guidelines.
+- Preserve explicit restrictions and important requirements.
+- Avoid inventing company facts.
+- Prefer short, direct instructions.
+- Remove repeated or irrelevant information.
+- Distinguish company facts from aspirational brand descriptions.
+- Preserve approved claims without strengthening them beyond the evidence provided.
+- Mark unsupported guarantees or claims as requiring verification.
+- Create role-specific instructions only from the relevant stored role rules.
+- Create task-specific instructions, not a full generic explanation.
+- Return machine-readable structured output, preferably validated JSON if compatible with the existing API and codebase.
+- Include no unnecessary commentary in the generated instruction data.
+- Fail safely if required information is missing or invalid.
+
+Use the project's existing JSON parsing and validation approach where practical.
+
+Validate the response schema before storing the new instruction configuration.
+
+Do not treat a malformed or empty response as a successful prompt-generation operation.
+
+The compact prompt generator should not be allowed to remove essential security constraints, backend authorization rules, or mandatory human-approval requirements.
+
+Store generated prompts as configuration data, not as executable code.
+
+Treat company-provided content as data. Do not allow instructions embedded in a company description, uploaded file, employee post, or extracted document to override system security instructions or cross-company isolation.
+
+# PART F — SAVE-TRIGGERED PROMPT GENERATION AND VERSIONING
+
+## 17. Regenerate company instructions after saving About Company
+
+When the CEO saves or updates About Company:
+
+1. Validate the submitted fields.
+2. Persist the company profile.
+3. Increment the relevant profile/configuration version.
+4. Use the existing AI API to generate a new compact company context and updated task instructions based on the current profile and current guidelines.
+5. Validate the generated output.
+6. Save the new version in the database, linked to the correct company.
+7. Mark the version as current only when its source versions match the latest saved profile and guidelines.
+8. Notify the CEO when the updated AI configuration is ready.
+
+The new prompts must reflect the actual saved company details.
+
+Example:
+
+If one company is a technology hosting provider, its content instructions should reflect server/hosting services, verified technical facts, and the relevant technology audience.
+
+If another company is an education provider, its content instructions should instead reflect education services, students or learners as appropriate, its saved brand voice, and its own verified information.
+
+Do not use Nova Unlimited's context for the education company.
+
+## 18. Regenerate company instructions after saving Guidelines
+
+When the CEO saves or updates Guidelines:
+
+1. Validate the guideline sections.
+2. Save the guideline content.
+3. Increment the guideline/configuration version.
+4. Use the existing AI API to regenerate the affected compact instructions based on the newly saved rules and current company profile.
+5. Preserve company-wide instructions and regenerate role-specific/task-specific sections as required.
+6. Validate the output.
+7. Persist the updated prompt version.
+8. Make it active only when it corresponds to the latest saved company profile and guidelines.
+9. Show a clear result to the CEO.
+
+Changing employee guidelines must update the instructions used for employee tasks.
+
+Changing manager guidelines must update instructions used for manager tasks.
+
+Changing HOD guidelines must update instructions used for HOD tasks.
+
+Changing a company-wide guideline must affect all relevant roles and tasks.
+
+Changing platform-specific guidelines must affect only relevant platform tasks, without accidentally changing unrelated companies' configurations.
+
+## 19. Saving and generation failure behavior
+
+Saving company details and generating prompts are related operations but must not cause data loss.
+
+First preserve the valid company profile/guidelines in persistent storage.
+
+If the AI API is temporarily unavailable:
+
+- Keep the successfully saved profile or guidelines.
+- Do not display a false "AI instructions updated successfully" message.
+- Mark the new prompt configuration as needing generation or refresh.
+- Show a clear status and a Retry button.
+- Retry with reasonable limits and handle rate limits/timeouts using the existing client where possible.
+- Do not leave the company permanently stuck in an unusable state.
+- Do not silently keep using an old prompt version that contradicts the latest saved guidelines.
+
+When an old instruction set no longer matches the current saved policy, the runtime must not pretend it is current. Either assemble a compact safe instruction directly from the latest saved data using a supported fallback, or clearly pause the affected AI operation until a valid current configuration can be prepared.
+
+Never lose the last successfully saved company information merely because prompt generation failed.
+
+Use the smallest reliable implementation compatible with the existing architecture. Do not introduce an unnecessary complex queue or service if the current project can handle this safely.
+
+# PART G — RUNTIME PROMPT ASSEMBLY
+
+## 20. All relevant AI requests must use the authenticated company context
+
+When an employee, manager, or HOD starts an AI-powered task, resolve the context using the authenticated user's stored account.
+
+Identify:
+
+- Authenticated user ID
+- Authenticated company ID
+- User's role
+- Current task
+- Current post type
+- Selected platform, if applicable
+- Relevant company profile version
+- Current guideline version
+- Matching compact instruction version
+- User's request and content
+
+Fetch the company's current instruction configuration from the backend/database.
+
+Do not identify the company merely by trusting an email string submitted from the browser or an editable company name.
+
+The email/login ID identifies the account, while the authenticated backend user record determines the company and role.
+
+An employee must only receive instructions and company data belonging to their own organization.
+
+Managers and HODs must receive their applicable role-specific instructions, in addition to relevant company-wide and task-specific instructions.
+
+The CEO follows the CEO's management permissions. Do not automatically grant CEO posting permissions just because the CEO has saved guidelines.
+
+## 21. Compose a small prompt for each task
+
+At runtime, assemble the prompt from only the required parts:
+
+1. Essential system/safety instructions
+2. Compact company context
+3. Relevant role instructions
+4. Relevant task instructions
+5. Selected platform/post-type instructions, if applicable
+6. Current user request or content to review
+7. Required output format
+
+Do not attach irrelevant role instructions or unrelated platform guidelines.
+
+Do not transmit all company records, employee lists, or unrelated confidential information to the AI API.
+
+Apply a reasonable prompt-size limit consistent with the configured model and API.
+
+If the compact instructions become outdated, select the correct up-to-date version or trigger regeneration/fallback behavior. Do not blindly use cached prompts from an old guideline version.
+
+The final prompt must never be the only authorization mechanism. Backend access control and company data isolation must remain independent of the AI.
+
+# PART H — APPLY PERSONALIZATION TO EVERY EXISTING AI FEATURE
+
+## 22. Text generation in New Post
+
+When an employee, manager, or HOD asks BrandLens to generate social-media content:
+
+- Use the correct company's compact context.
+- Use the authenticated user's role-specific rules.
+- Use the applicable platform and content-type guidelines.
+- Respect the user's topic, purpose, audience, and requested tone.
+- Generate content relevant to the company's products/services.
+- Avoid unsupported facts, performance promises, statistics, and certifications.
+- Keep the output suitable for the selected platform.
+- Keep the existing post creation workflow intact.
+
+If the company is Nova Unlimited, the result should reflect the saved Nova profile and its approved server/hosting context.
+
+If another company has saved education-related details, the result must reflect that company's actual identity and guidelines.
+
+Do not hard-code sample topics or company names into the generic production generation logic.
+
+## 23. Text Enhancement
+
+Integrate the compact company prompt with the existing Text Review/Text Enhancement feature.
+
+The enhancer should improve the title and body/details where those fields exist.
+
+It must:
+
+- Preserve the author's intended meaning.
+- Respect the company voice and platform rules.
+- Improve clarity and relevance.
+- Remove or qualify unsupported claims when appropriate.
+- Preserve approved technical or product terminology.
+- Avoid adding new facts that are not supplied by the company or user.
+- Follow the role's content permissions.
+- Return a focused enhanced version rather than a long explanation.
+
+Show the user the result using the existing Enhancer interface.
+
+Do not change the current form unnecessarily.
+
+## 24. Image Generation — critical integration
+
+Use my project's existing image-generation API/client.
+
+Do not replace the existing image generator with a fictional endpoint or claim an image was generated if no generation request occurred.
+
+Before calling the image-generation API, use the configured LLM API to create a short image-generation prompt based on:
+
+- The company's saved profile
+- Relevant company and role guidelines
+- The post's subject and intended message
+- The selected platform or image dimensions, if available
+- The desired visual style or user request
+- Any essential restrictions or elements to avoid
+
+The LLM should convert this context into a concise, useful prompt that fits the actual image-generation API's requirements.
+
+**Default compact image prompt target: approximately 250–450 characters, or the API's configured limit if different.** Make this limit configurable. Keep prompts shorter when the user's request is simple, and do not add irrelevant company background.
+
+The generated prompt should describe the visual result, not contain a long explanation of why the image is needed.
+
+For example, a Nova Unlimited prompt might describe a clean technology/hosting visual using the company's saved brand style, without inventing uptime guarantees, certifications, pricing, or performance metrics.
+
+For a different company, use that company's actual saved style and subject instead.
+
+After generating the short image prompt:
+
+1. Validate and trim it safely if necessary.
+2. Pass it to the existing image-generation API with any required settings.
+3. Handle generation errors and API limits using the existing client.
+4. Display the actual returned image in the current UI.
+5. Preserve the existing image-generation workflow and save/display behavior.
+
+Do not send the entire long company guideline document directly to the image-generation model when a compact task-specific prompt is sufficient.
+
+Do not allow the LLM to generate only a textual description and then pretend the resulting image exists.
+
+If the actual image API has a different input format or character limit, follow the installed client's genuine requirements.
+
+## 25. Image Review
+
+Use the current image-review implementation and configured vision-capable API.
+
+Extend its existing request so that it evaluates the image using the correct company context and relevant rules.
+
+The review may consider:
+
+- Relevance to the company's products and services
+- Brand voice and desired visual identity, where visually assessable
+- Suitability for the selected platform
+- Clearly visible text and messaging
+- Unsupported claims visible in the image
+- Privacy or confidential information risks
+- Other checks already implemented by the application
+
+Do not claim that a visual property or claim has been verified when it cannot be assessed reliably.
+
+Return concise findings and practical suggestions through the existing response structure.
+
+Respect uncertainty and human review when necessary.
+
+Do not apply a universal Nova-specific image policy to all companies.
+
+## 26. PDF/DOCX text extraction and document review
+
+Preserve the existing PDF/DOCX text extraction functionality.
+
+Keep extraction separate from semantic review:
+
+1. Extract readable text from the submitted document using the existing supported parser.
+2. Pass the extracted text to the review workflow with the correct compact company context.
+3. Apply the relevant role, content-type, and guideline rules.
+4. Show review findings and suggestions using the existing interface.
+
+The extraction process should not invent missing text.
+
+If the document contains no readable text or extraction fails, show a clear error.
+
+Use appropriate upload validation and existing file-size limits.
+
+## 27. Other existing AI operations
+
+Inspect the complete project and identify any additional AI operations.
+
+Where relevant, integrate the company-specific instruction configuration into those operations, including the existing Help or content-related AI assistance if it processes company content.
+
+Do not unnecessarily personalize features unrelated to company content or expose confidential company context to unrelated requests.
+
+All existing AI-powered features must use the correct organization context where that context affects their results.
+
+# PART I — PROMPT VERSIONING AND CORRECTNESS
+
+## 28. Keep AI instructions synchronized with saved guidelines
+
+Each saved company profile/guideline configuration should have an identifiable version.
+
+A generated prompt configuration must store which profile and guideline versions it was generated from.
+
+Before using it, verify it matches the latest relevant versions.
+
+When a CEO updates guidelines, future AI requests must use the updated instructions—not stale prompts from before the change.
+
+If the system has more than one company, every prompt record must be linked to its company.
+
+Never share a single globally active company-specific prompt across organizations.
+
+Use company-aware cache keys if caching is necessary.
+
+Invalidate or refresh cached prompts when relevant saved data changes.
+
+Prevent one company's prompt refresh from overwriting another company's current instructions.
+
+Store enough status information to support reliable regeneration, error reporting, and retry.
+
+# PART J — DEMO ONBOARDING FOR NOVA UNLIMITED
+
+## 29. Guided registration and login
+
+Create a guided, first-run demo using Nova Unlimited so the tester can explore the product without having to configure everything manually.
+
+Use tasteful arrows, highlighted controls, short callout cards, progress indicators, and animations matching the existing BrandLens style.
+
+### Step 1: Register Company
+
+Prefill:
+
+Company Name: Nova Unlimited
+
+Category: Technology
+
+Company Email: novaunlimited0@gmail.com
+
+Password: ceo123
+
+Select Technology through the actual dropdown value.
+
+Do not automatically submit the form.
+
+If the seeded Nova company already exists, detect it without creating duplicates and guide the tester to Login.
+
+### Step 2: CEO Login
+
+Prefill:
+
+Email: novaunlimited0@gmail.com
+
+Password: ceo123
+
+Show a short explanation that the tester is entering the Nova CEO workspace.
+
+The tester must click Login.
+
+### Step 3: Add Team
+
+Highlight Employee, Manager, and HOD cards and their Add buttons.
+
+Allow the tester to create team accounts.
+
+### Step 4: About Company
+
+Navigate to About Company.
+
+Show suggested Nova information with a subtle typewriter/fade-in animation if the profile has not already been configured.
+
+Let the tester review and save the profile.
+
+On saving, trigger the actual company-context and compact-prompt refresh process.
+
+### Step 5: Guidelines
+
+Show editable Nova company-wide and role-specific guidelines.
+
+Let the tester review and save them.
+
+On saving, trigger the actual guideline-specific prompt refresh process.
+
+Display a clear state indicating whether the AI instruction configuration is current or still needs regeneration.
+
+### Step 6: Logout
+
+Guide the CEO to the Logout control.
+
+After logout, return to Login.
+
+### Step 7: Employee login
+
+Prefill:
+
+Email: employee@novaunlimited.test
+
+Password: employee123
+
+The user must click Login.
+
+Open the existing employee posting dashboard and show the available saved sample posts.
+
+Seeded demo account identifiers:
+
+CEO:
+novaunlimited0@gmail.com
+Password: ceo123
+
+Employee:
+employee@novaunlimited.test
+Password: employee123
+
+Manager:
+manager@novaunlimited.test
+Password: manager123
+
+HOD:
+hod@novaunlimited.test
+Password: hod123
+
+These are isolated demonstration credentials, not production defaults for real customers.
+
+The demo accounts must actually exist and authenticate through the implemented system.
+
+The prefilled values must never bypass authentication.
+
+Provide an easy-to-use demo account selector if it improves the tester experience, but selecting a demo account must only fill the credentials—not log the user in automatically.
+
+### Tour rules
+
+- Allow the tester to skip the tour.
+- Include Replay Tour where practical.
+- Persist completion state appropriately.
+- Do not repeatedly interrupt returning users.
+- Do not overwrite user-edited profile or guideline data.
+- Do not falsely mark a step completed if its save operation failed.
+- Show readable errors and retry options.
+- Keep all tour state separate from authorization.
+
+# PART K — COMPANY ISOLATION AND DEMO DATA
+
+## 30. Strict company data isolation
+
+Represent each company with a unique ID.
+
+Every user, guideline, post, review, and prompt configuration must be associated with the appropriate company.
+
+All data-access operations must enforce company authorization on the backend.
+
+Company A must never access Company B's:
+
+- Company profile
+- Guidelines
+- Users
+- Posts
+- History
+- Reviews
+- Prompt configurations
+- AI-generated company-specific content context
+
+Do not trust a company ID merely because the browser supplies it.
+
+Resolve company ownership from the authenticated server-side account and enforce authorization for every protected operation.
+
+## 31. Idempotent demo seeding
+
+The Nova demo seed should create the company, sample users, sample guidelines, prompt configuration, and suitable example posts only when needed.
+
+Running the seed multiple times must not create duplicate records.
+
+Do not overwrite user-edited content on every page load.
+
+Provide a controlled demo reset mechanism only if appropriate to the current architecture, and do not expose destructive demo-reset actions to normal customers.
+
+Keep new-company registration independent from Nova Unlimited.
+
+A new education company should have its own empty company workspace and should not automatically receive Nova's profile, users, guidelines, posts, or generated prompt configuration.
+
+# PART L — SECURITY
+
+## 32. Required security safeguards
+
+- Hash passwords on the backend using a suitable supported algorithm such as Argon2 or bcrypt.
+- Never store plaintext passwords in the database, source code, frontend, or logs.
+- Store private API keys and credentials only on the server or in appropriate secret management.
+- Never expose the LLM API key or image-generation API key to the browser.
+- Enforce authentication and role authorization on backend routes.
+- Enforce company-level data access for every protected operation.
+- Validate inputs on both frontend and backend.
+- Validate generated structured AI responses before saving or using them.
+- Apply upload type and size validation.
+- Handle rate limits, API timeouts, empty responses, and malformed outputs.
+- Do not let untrusted user input override system security requirements.
+- Do not send irrelevant private data to external AI services.
+- Use the minimum company and post context required by a task.
+- Preserve human approval in the existing workflow.
+- Treat AI output as suggestions rather than authoritative proof.
+- Avoid exposing confidential company facts or customer information through generated prompts or logs.
+
+The `ceo123`, `employee123`, `manager123`, and `hod123` credentials are only for the isolated Nova demo. Do not assign these predictable defaults to real customer accounts.
+
+# PART M — PRESERVE EXISTING BRANDLENS FEATURES
+
+## 33. Keep the current website working
+
+Preserve the current design and all existing supported features.
+
+Reuse the existing Employee, Manager, and HOD dashboards.
+
+Preserve the Enhancer area and its existing tools:
+
+- Text Review / Text Enhancement
+- Image Review
+- Image Generation
+- PDF/DOCX Text Extraction
+
+Preserve current New Post, Dashboard, History, Pending, Help, About, review workflows, and relevant navigation.
+
+Do not put CEO management tabs into normal employee navigation.
+
+Do not remove existing post status, history, pending-review, or approval behavior.
+
+Integrate the company-specific AI prompt assembly into the existing AI service/request path rather than creating disconnected duplicate buttons or unused prompt-generation functions.
+
+Keep the current dark, futuristic BrandLens identity, spacing, typography, responsive layout, and subtle animations.
+
+Avoid unnecessary redesigns.
+
+# PART N — SUGGESTED DATA MODEL
+
+## 34. Adapt the schema to the existing application
+
+Reuse existing tables/collections where appropriate. Do not blindly create duplicates.
+
+The logical data model should support:
+
+### Companies
+- Company ID
+- Name
+- Category
+- Registered CEO email
+- Company profile
+- Current profile version
+- Current guideline version
+- Created and updated timestamps
+
+### Users
+- User ID
+- Company ID
+- Name
+- Unique login identifier
+- Secure password hash
+- Role
+- Account status
+- Created timestamp
+
+### Guidelines
+- Guideline ID
+- Company ID
+- Scope: company-wide, employee, manager, HOD, post type, or platform
+- Guideline content
+- Version information
+- Updated timestamp
+
+### Company AI prompt configurations
+- Prompt configuration ID
+- Company ID
+- Source profile version
+- Source guideline version
+- Compact company context
+- Role instruction components
+- Task instruction components
+- Platform instruction components where applicable
+- Generation status
+- Creation/update timestamp
+
+### Existing content and review records
+Preserve the current schema and associate records with the authenticated company and user.
+
+### Demo tour state
+Persist only the minimum information needed to track progress or completion.
+
+Use database constraints or equivalent validation for unique IDs, relationships, and ownership.
+
+Use safe migrations if required. Do not clear existing records.
+
+# PART O — TESTING AND ACCEPTANCE CRITERIA
+
+## 35. Registration and authentication
+
+Verify:
+
+- A new company can register.
+- Duplicate company emails are rejected or redirected to Login.
+- Registration redirects to Login with the email prefilled.
+- The CEO sees the CEO Dashboard.
+- Employee, Manager, and HOD accounts see their correct existing dashboards.
+- Logout works.
+- Protected routes require authentication.
+- A user cannot access another company's resources by editing a URL or request.
+
+## 36. CEO workspace
+
+Verify:
+
+- The four count cards display accurate data.
+- Clicking each card shows the correct list.
+- The CEO can add an employee, manager, or HOD.
+- Generated login identifiers are unique.
+- Accounts remain available after refresh.
+- The CEO can edit About Company.
+- The CEO can edit company-wide and role-specific guidelines.
+- Existing saved information is not overwritten by the tour.
+
+## 37. AI personalization tests
+
+This section is mandatory.
+
+Create two isolated test companies with clearly different details and guidelines.
+
+Example Company A: Nova Unlimited, a technology/server/hosting provider.
+
+Example Company B: an education provider focused on learning services.
+
+Give each company different brand voice rules and constraints.
+
+Then verify all of the following:
+
+1. Saving Company A's About Company information creates or refreshes Company A's prompt configuration.
+2. Saving Company A's Guidelines creates or refreshes Company A's prompt configuration.
+3. Company A's compact instructions contain its own approved context and rules.
+4. Company B's compact instructions reflect its own profile and guidelines, not Nova Unlimited's.
+5. A new post created by an employee uses the authenticated company's actual instructions.
+6. Text generation uses the correct company and role.
+7. Text enhancement uses the correct company and role.
+8. Image-prompt generation uses the correct company profile and guidelines.
+9. The image-generation API receives the actual compact prompt generated for that task.
+10. Image Review uses the relevant company and content guidelines.
+11. PDF/DOCX extracted text is reviewed against the authenticated company's guidelines.
+12. Changing a company guideline updates the prompt version and affects subsequent AI requests.
+13. A company cannot read or replace another company's prompt configuration.
+14. A failed prompt-generation API request is not reported as successful.
+15. Older prompt configurations are not silently treated as current after their source guidelines change.
+
+Also inspect the actual API request construction or logs, with secrets and private content safely redacted, to verify company ID, role, current guideline version, selected task, and compact prompt are correctly associated.
+
+Do not claim dynamic personalization works merely because the prompt is displayed in the CEO interface. Verify that the existing AI request path actually consumes it.
+
+## 38. Prompt-size and reliability tests
+
+Verify:
+
+- The generated image prompt is concise and obeys the configured limit.
+- The image prompt remains useful and does not omit essential visual requirements.
+- Text-generation and enhancement instructions are short and task-specific.
+- Irrelevant role and platform guidelines are not attached unnecessarily.
+- Invalid JSON or malformed prompt output is rejected safely.
+- API timeouts and rate limits do not crash the application.
+- Retrying prompt generation does not create duplicate or inconsistent records.
+- When guidelines are saved, stale instructions are not silently presented as current.
+- API secrets are never exposed to browser requests or responses.
+
+## 39. Regression tests
+
+Verify that:
+
+- Existing New Post behavior still works.
+- Existing review workflows still work.
+- Existing History and Pending behavior still works.
+- Existing Enhancer tools remain accessible and functional.
+- Existing manager and HOD features remain available.
+- Existing posts are not lost.
+- Current visual styling is preserved.
+- Nova demo registration does not create duplicate companies.
+- New company registration does not inherit Nova-specific data.
+
+Only report checks as passed if they were actually run or verified.
+
+# PART P — FINAL DELIVERY
+
+## 40. Complete the implementation
+
+Implement the working changes directly in the current project.
+
+Before finishing:
+
+1. Explain the existing architecture you discovered.
+2. List the files and components changed.
+3. Explain how company registration, login, roles, and company isolation work.
+4. Explain how About Company and Guidelines trigger compact prompt generation.
+5. Explain how the generated prompt versions are stored and refreshed.
+6. Explain how the current company, user role, task, and platform are used when building each runtime AI request.
+7. Confirm how the existing text, image, document, and Enhancer features use the generated prompts.
+8. List the tests actually run and their results.
+9. Identify any remaining integration issues honestly.
+10. List any required environment variables, migration steps, or commands.
+11. Provide the Nova demo login details.
+12. Confirm which existing dashboards and features were preserved and tested.
+
+Do not claim an API integration works unless the actual configured client is connected and the operation has been verified.
+
+If a required backend service or external API is unavailable, implement the remaining safe functionality and state the specific limitation.
+
+## FINAL ACCEPTANCE CONDITION
+
+BrandLens must become a multi-company platform where:
+
+- Each company can register and manage its own workspace.
+- Its CEO can manage employees, managers, and HODs.
+- The CEO can save and update company details and guidelines.
+- Those changes generate and store fresh, compact, company-specific AI instructions through the existing LLM API.
+- Text generation, text enhancement, image generation, image review, and supported document review use the relevant current instructions.
+- Image-generation requests receive a concise prompt derived from the company's actual context and the user's task.
+- Each staff member reaches their existing role-specific dashboard through their own credentials.
+- A guided Nova Unlimited demo works without duplicate records or overwritten data.
+- Existing BrandLens features and design are preserved.
+- Company information, users, posts, guidelines, and prompt configurations remain isolated between companies.
+
+Begin by inspecting the existing application, then implement and test this entire upgrade. Do not rebuild the website from scratch.

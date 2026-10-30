@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#08090d" />
+<title>BrandLens — Your brand. Without the noise.</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--bg:#08090d;--panel:#101119;--ink:#f4f3f8;--muted:#a4a3b2;--soft:#777785;--line:rgba(239,235,255,.13);--violet:#b39bff;--cyan:#9cecff;--mint:#9ce6c5;--red:#ff9aa7;--ease:cubic-bezier(.2,.75,.2,1);--mono:'DM Mono',monospace;--sans:'Manrope',system-ui,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:88px}body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden}button,a{font:inherit}a{color:inherit;text-decoration:none}button{color:inherit}::selection{background:rgba(179,155,255,.35)}
+body:before{content:"";position:fixed;inset:0;z-index:-3;pointer-events:none;background:radial-gradient(ellipse at 52% 20%,rgba(103,84,157,.16),transparent 38%),radial-gradient(ellipse at 93% 52%,rgba(65,151,169,.065),transparent 32%),linear-gradient(180deg,#08090d,#090a0f 58%,#08090d)}
+.noise{position:fixed;inset:0;z-index:20;pointer-events:none;opacity:.10;mix-blend-mode:soft-light;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E")}
+.ambient{position:fixed;inset:0;overflow:hidden;z-index:-1;pointer-events:none}.ambient-glow{position:absolute;width:min(70vw,900px);aspect-ratio:1;left:53%;top:45%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(125,98,198,.13),rgba(74,133,154,.035) 39%,transparent 68%);filter:blur(18px);animation:breathe 11s ease-in-out infinite alternate}.ambient-line{position:absolute;height:42vh;width:1px;background:linear-gradient(transparent,rgba(156,236,255,.25),transparent);left:13%;top:24%;transform:rotate(24deg);opacity:0;animation:lightpass 11s 2s ease-in-out infinite}.ambient-line.alt{left:88%;top:53%;height:27vh;transform:rotate(-22deg);animation-delay:6s}
+@keyframes breathe{from{transform:translate(-52%,-48%) scale(.91);opacity:.65}to{transform:translate(-48%,-52%) scale(1.09);opacity:1}}@keyframes lightpass{0%,100%{opacity:0;translate:0 -20px}30%{opacity:.75}70%{opacity:.1;translate:0 24px}}
+.topbar{height:82px;position:sticky;top:0;z-index:15;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,5vw,78px);border-bottom:1px solid transparent;background:linear-gradient(180deg,rgba(8,9,13,.92),rgba(8,9,13,.58));backdrop-filter:blur(15px);transition:border-color .3s,background .3s}.topbar.scrolled{border-color:var(--line);background:rgba(8,9,13,.86)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.045em;font-size:17px}.brandmark{width:25px;height:25px;position:relative;border:1px solid rgba(190,174,255,.95);border-radius:50%;display:inline-block;box-shadow:0 0 19px rgba(179,155,255,.13)}.brandmark:before{content:"";position:absolute;inset:5px;border:1px solid var(--cyan);border-radius:50%;opacity:.9}.brandmark:after{content:"";position:absolute;width:4px;height:4px;right:-2px;top:3px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.nav{display:flex;align-items:center;gap:31px;color:#b0afbd;font-size:12px}.nav a{transition:color .2s}.nav a:hover{color:white}.nav-actions{display:flex;align-items:center;gap:12px}.nav-enter{display:inline-flex;align-items:center;gap:13px;padding:12px 16px;border:1px solid rgba(190,174,255,.48);background:rgba(141,115,211,.11);font:10px var(--mono);letter-spacing:.12em;transition:all .25s;cursor:pointer}.nav-enter:hover{border-color:var(--violet);background:rgba(141,115,211,.2);box-shadow:0 0 28px rgba(179,155,255,.1);transform:translateY(-1px)}.menu-button{display:none;border:1px solid var(--line);background:transparent;padding:9px 11px;cursor:pointer}
+main{width:100%}.hero{position:relative;min-height:calc(100svh - 82px);padding:clamp(72px,9vw,130px) clamp(22px,8vw,130px) 78px;display:grid;grid-template-columns:minmax(0,1.07fr) minmax(320px,.93fr);gap:clamp(30px,6vw,90px);align-items:center;max-width:1600px;margin:auto}.hero-copy{position:relative;z-index:2;max-width:700px}.eyebrow{display:flex;align-items:center;gap:10px;color:#b7b1cf;font:10px var(--mono);letter-spacing:.19em;text-transform:uppercase;margin-bottom:29px;opacity:0;animation:rise .8s .3s var(--ease) forwards}.eyebrow:before{content:"";display:inline-block;width:24px;height:1px;background:linear-gradient(90deg,var(--violet),var(--cyan))}.hero h1{font-size:clamp(3.8rem,7.2vw,7.8rem);line-height:.98;font-weight:500;letter-spacing:-.085em;margin:0;max-width:800px;opacity:0;animation:rise 1s .42s var(--ease) forwards}.hero h1 .dim{display:block;color:#b5a7e4}.hero-desc{max-width:455px;color:var(--muted);font-size:clamp(14px,1.3vw,16px);line-height:1.9;margin:30px 0 0;opacity:0;animation:rise .9s .58s var(--ease) forwards}.hero-actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-top:38px;opacity:0;animation:rise .9s .72s var(--ease) forwards}.primary-cta{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:20px;min-height:56px;padding:0 22px;background:linear-gradient(105deg,rgba(145,115,220,.25),rgba(80,163,180,.14));border:1px solid rgba(197,181,255,.72);box-shadow:0 8px 30px rgba(83,67,133,.12),inset 0 0 20px rgba(179,155,255,.035);font:11px var(--mono);letter-spacing:.13em;cursor:pointer;transition:transform .25s var(--ease),border-color .25s,box-shadow .25s}.primary-cta:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent,rgba(190,176,255,.23),rgba(156,236,255,.15),transparent);transform:translateX(-120%);transition:transform .8s var(--ease)}.primary-cta:hover{transform:translateY(-3px);border-color:#e2d9ff;box-shadow:0 12px 38px rgba(117,91,190,.2),0 0 24px rgba(179,155,255,.08)}.primary-cta:hover:before{transform:translateX(120%)}.primary-cta:active{transform:translateY(0) scale(.99)}.primary-cta .arrow{font:17px var(--sans);transition:transform .25s}.primary-cta:hover .arrow{transform:translate(3px,-2px)}.text-cta{color:#aaa8b7;display:inline-flex;align-items:center;gap:9px;font-size:12px;padding:10px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}.text-cta:hover{color:#fff;border-color:rgba(179,155,255,.45)}.hero-note{margin-top:47px;display:flex;align-items:center;gap:10px;color:#717180;font:9px var(--mono);letter-spacing:.13em;opacity:0;animation:rise .9s .85s var(--ease) forwards}.note-dot{width:5px;height:5px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px rgba(156,230,197,.65)}
+@keyframes rise{from{opacity:0;transform:translateY(17px);filter:blur(5px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+.visual-stage{position:relative;min-height:480px;display:grid;place-items:center;perspective:1000px;opacity:0;animation:visualIn 1.2s .6s var(--ease) forwards}@keyframes visualIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}.lens-art{position:relative;width:min(34vw,450px);min-width:300px;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;transform-style:preserve-3d;transition:transform .45s var(--ease)}.lens-art:before,.lens-art:after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid rgba(190,174,255,.18);box-shadow:inset 0 0 75px rgba(131,106,201,.045),0 0 65px rgba(80,144,169,.035)}.lens-art:after{inset:12%;border-color:rgba(156,236,255,.19);transform:rotateX(62deg) rotateZ(-22deg);box-shadow:0 0 30px rgba(156,236,255,.04)}.lens-inner{position:absolute;inset:22%;border-radius:50%;border:1px solid rgba(208,194,255,.19);transform:rotateX(62deg) rotateZ(30deg);background:radial-gradient(circle at 38% 37%,rgba(179,155,255,.18),rgba(29,29,45,.12) 46%,transparent 69%);box-shadow:inset 0 0 60px rgba(179,155,255,.07),0 0 60px rgba(179,155,255,.05);animation:innerFloat 8s ease-in-out infinite alternate}.lens-center{width:23%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(207,197,255,.8),rgba(139,112,205,.24) 20%,rgba(9,10,15,.65) 62%);border:1px solid rgba(210,200,255,.48);box-shadow:0 0 50px rgba(166,139,255,.18),inset 0 0 24px rgba(156,236,255,.14);animation:centerPulse 6s ease-in-out infinite alternate}.lens-spark{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px 3px rgba(156,236,255,.48);top:17%;right:20%;animation:spark 4s ease-in-out infinite}.lens-label{position:absolute;left:0;bottom:13%;font:9px var(--mono);letter-spacing:.14em;color:#757587}.lens-label:before{content:"";display:inline-block;width:20px;height:1px;vertical-align:middle;background:var(--violet);margin-right:9px}.lens-index{position:absolute;right:3%;top:15%;font:9px var(--mono);letter-spacing:.14em;color:#777587;writing-mode:vertical-rl}.float-card{position:absolute;background:linear-gradient(145deg,rgba(23,23,35,.92),rgba(12,13,20,.88));border:1px solid rgba(206,194,255,.19);backdrop-filter:blur(18px);box-shadow:0 25px 80px rgba(0,0,0,.28);animation:cardFloat 7s ease-in-out infinite}.float-card.review{width:min(270px,78%);top:12%;left:-2%;padding:17px 18px;transform:rotate(-2deg)}.float-card.role{width:min(220px,65%);right:-4%;bottom:15%;padding:15px 16px;animation-delay:-2.5s;transform:rotate(2deg)}.card-kicker{font:9px var(--mono);color:#9390a5;letter-spacing:.13em;display:flex;align-items:center;justify-content:space-between}.live-pill{font:8px var(--mono);letter-spacing:.05em;color:var(--mint);border:1px solid rgba(156,230,197,.23);background:rgba(156,230,197,.06);padding:4px 6px}.review-title{font-size:14px;font-weight:700;letter-spacing:-.03em;margin:16px 0 14px}.review-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid rgba(255,255,255,.07);font-size:10px;color:#afadbb}.mini-status{font:8px var(--mono);padding:4px 6px;white-space:nowrap}.pass{color:var(--mint);background:rgba(156,230,197,.08);border:1px solid rgba(156,230,197,.18)}.check{color:#e9bd79;background:rgba(233,189,121,.07);border:1px solid rgba(233,189,121,.2)}.role-big{font-size:15px;font-weight:700;margin:14px 0 7px}.role-copy{font-size:10px;line-height:1.7;color:#9998a7}.role-line{height:3px;background:rgba(255,255,255,.09);margin-top:13px;overflow:hidden}.role-line span{display:block;width:72%;height:100%;background:linear-gradient(90deg,var(--violet),var(--cyan));transform-origin:left;animation:bar 3.2s ease-in-out infinite alternate}@keyframes innerFloat{to{transform:rotateX(60deg) rotateZ(46deg) scale(1.04)}}@keyframes centerPulse{to{box-shadow:0 0 80px rgba(166,139,255,.26),inset 0 0 30px rgba(156,236,255,.18);transform:scale(1.035)}}@keyframes spark{0%,100%{opacity:.4;transform:scale(.7)}50%{opacity:1;transform:scale(1.35)}}@keyframes cardFloat{0%,100%{translate:0 0}50%{translate:0 -9px}}@keyframes bar{to{width:86%}}
+.section{padding:clamp(82px,10vw,142px) clamp(22px,8vw,130px);max-width:1600px;margin:auto;position:relative}.section-top{display:flex;align-items:flex-end;justify-content:space-between;gap:38px;margin-bottom:38px}.section-tag{font:10px var(--mono);letter-spacing:.17em;color:#b2a6d7;text-transform:uppercase;margin-bottom:17px}.section h2{font-size:clamp(2rem,4.8vw,4.5rem);line-height:1.05;letter-spacing:-.075em;font-weight:500;margin:0;max-width:760px}.section h2 .accent{color:#b5a6e8}.section-intro{max-width:360px;font-size:13px;line-height:1.85;color:var(--muted);margin:0 0 3px}.feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.feature{position:relative;min-height:235px;padding:27px 26px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(23,23,34,.68),rgba(12,13,18,.45));overflow:hidden;transition:transform .35s var(--ease),border-color .35s,background .35s}.feature:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 100% 0,rgba(179,155,255,.105),transparent 45%);opacity:.4;transition:opacity .3s}.feature:hover{transform:translateY(-5px);border-color:rgba(179,155,255,.36);background:linear-gradient(145deg,rgba(28,26,42,.83),rgba(12,13,18,.65))}.feature:hover:before{opacity:1}.feature-num{font:10px var(--mono);letter-spacing:.14em;color:#7e7b91}.feature-symbol{height:41px;width:41px;border:1px solid rgba(179,155,255,.23);display:grid;place-items:center;margin:25px 0 20px;color:#c7b8ff;background:rgba(179,155,255,.06)}.feature-symbol svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.feature h3{font-size:17px;letter-spacing:-.035em;margin:0 0 10px;font-weight:600}.feature p{font-size:12px;line-height:1.8;color:#9d9baa;margin:0;max-width:310px}.section-divider{height:1px;max-width:1370px;margin:0 auto;background:linear-gradient(90deg,transparent,rgba(179,155,255,.19),rgba(156,236,255,.11),transparent)}
+.workflow{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(35px,8vw,120px);align-items:start}.workflow-aside{position:sticky;top:125px}.workflow-aside p{color:var(--muted);font-size:13px;line-height:1.9;max-width:340px;margin:24px 0 0}.workflow-steps{border-top:1px solid var(--line)}.step{display:grid;grid-template-columns:54px 1fr auto;align-items:start;gap:18px;padding:23px 0;border-bottom:1px solid var(--line);transition:padding .25s}.step:hover{padding-left:7px}.step-num{color:#878398;font:10px var(--mono);padding-top:4px}.step h3{font-size:17px;font-weight:600;letter-spacing:-.03em;margin:0 0 8px}.step p{font-size:12px;line-height:1.8;color:#9695a3;margin:0;max-width:470px}.step-arrow{color:#8984a3;font-size:18px;transition:transform .25s}.step:hover .step-arrow{transform:translate(3px,-3px);color:var(--cyan)}
+.about-strip{display:grid;grid-template-columns:1fr 1fr;gap:18px}.about-card{border:1px solid var(--line);background:linear-gradient(130deg,rgba(25,24,39,.68),rgba(12,13,18,.5));padding:clamp(26px,4vw,44px);position:relative;overflow:hidden}.about-card:after{content:"";position:absolute;right:-80px;bottom:-105px;width:230px;height:230px;border:1px solid rgba(179,155,255,.09);border-radius:50%;box-shadow:0 0 0 25px rgba(179,155,255,.018),0 0 0 52px rgba(156,236,255,.012);pointer-events:none}.about-card .tiny{font:10px var(--mono);letter-spacing:.16em;color:#b6a8df;margin-bottom:22px}.about-card h3{font-size:clamp(1.45rem,2.6vw,2.2rem);letter-spacing:-.06em;font-weight:500;margin:0 0 15px;position:relative;z-index:1}.about-card p{color:#a2a1af;font-size:13px;line-height:1.9;max-width:470px;margin:0;position:relative;z-index:1}.about-card .detail-link{display:inline-flex;align-items:center;gap:10px;margin-top:26px;font:10px var(--mono);letter-spacing:.1em;color:#d9d1f7;position:relative;z-index:1}.detail-link span{font-size:16px;transition:transform .2s}.detail-link:hover span{transform:translate(3px,-3px)}
+.final-cta{max-width:1370px;margin:30px auto clamp(60px,9vw,120px);padding:clamp(46px,8vw,100px) 25px;text-align:center;position:relative;overflow:hidden;border-top:1px solid rgba(179,155,255,.15);border-bottom:1px solid rgba(156,236,255,.1)}.final-cta:before{content:"";position:absolute;width:550px;height:250px;left:50%;top:45%;transform:translate(-50%,-50%);background:radial-gradient(ellipse,rgba(128,102,199,.13),transparent 70%);pointer-events:none}.final-cta>*{position:relative}.final-cta .section-tag{margin-bottom:19px}.final-cta h2{font-size:clamp(2.9rem,7vw,6.6rem);font-weight:500;letter-spacing:-.085em;line-height:.98;margin:0}.final-cta p{font-size:13px;line-height:1.8;color:var(--muted);margin:24px auto 28px;max-width:420px}.final-cta .primary-cta{margin:auto}
+.footer{padding:26px clamp(22px,5vw,78px) 31px;display:flex;justify-content:space-between;align-items:center;gap:20px;border-top:1px solid rgba(255,255,255,.07);color:#777684;font:9px var(--mono);letter-spacing:.1em}.footer-links{display:flex;gap:20px}.footer a:hover{color:#ddd5ff}
+.reveal{opacity:0;transform:translateY(22px);filter:blur(3px);transition:opacity .8s var(--ease),transform .8s var(--ease),filter .8s var(--ease)}.reveal.in-view{opacity:1;transform:translateY(0);filter:blur(0)}.feature-grid .feature:nth-child(2){transition-delay:.08s}.feature-grid .feature:nth-child(3){transition-delay:.16s}
+.modal-backdrop{position:fixed;inset:0;background:rgba(3,4,8,.7);backdrop-filter:blur(12px);z-index:40;display:grid;place-items:center;padding:22px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}.modal-backdrop.open{opacity:1;visibility:visible}.login-preview{width:min(100%,390px);border:1px solid rgba(190,174,255,.24);background:linear-gradient(145deg,#171622,#0b0c12);padding:30px;box-shadow:0 30px 100px rgba(0,0,0,.5);transform:translateY(12px) scale(.985);transition:transform .35s var(--ease)}.modal-backdrop.open .login-preview{transform:translateY(0) scale(1)}.login-preview-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}.login-preview .x{border:1px solid var(--line);background:transparent;width:32px;height:32px;cursor:pointer;font-size:19px;color:#aaa}.login-preview h3{font-size:28px;font-weight:500;letter-spacing:-.06em;margin:0 0 8px}.login-preview p{font-size:12px;line-height:1.8;color:var(--muted);margin:0 0 22px}.login-preview .primary-cta{width:100%;margin-top:5px}.modal-note{font:9px var(--mono);line-height:1.8;letter-spacing:.03em;color:#797888;text-align:center;margin-top:16px}
+@media(max-width:1000px){.hero{grid-template-columns:1fr;gap:42px;padding-top:82px}.hero-copy{max-width:800px}.visual-stage{min-height:390px}.lens-art{width:min(52vw,390px)}.float-card.review{left:8%}.float-card.role{right:7%}.workflow{grid-template-columns:1fr;gap:38px}.workflow-aside{position:static}.workflow-aside p{max-width:570px}.section-top{align-items:flex-start;flex-direction:column;gap:18px}.section-intro{max-width:560px}}
+@media(max-width:720px){.topbar{height:70px}.nav{display:none;position:absolute;top:70px;left:0;right:0;padding:20px 24px 24px;background:rgba(8,9,13,.97);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;gap:20px}.nav.open{display:flex}.nav-actions .nav-enter{padding:10px 12px;font-size:9px}.menu-button{display:inline-flex}.hero{min-height:auto;padding-top:70px;padding-bottom:65px}.hero h1{font-size:clamp(3.5rem,15vw,6.2rem)}.hero-desc{max-width:400px}.visual-stage{min-height:350px;margin:0 -8px}.lens-art{width:min(72vw,360px);min-width:245px}.float-card.review{left:0;top:8%;width:220px}.float-card.role{right:0;bottom:10%;width:195px}.section{padding-top:78px;padding-bottom:78px}.feature-grid{grid-template-columns:1fr;gap:10px}.feature{min-height:0;padding:22px}.feature-symbol{margin:17px 0 16px}.about-strip{grid-template-columns:1fr}.workflow-steps .step{grid-template-columns:35px 1fr auto;gap:12px;padding:20px 0}.final-cta{margin-left:18px;margin-right:18px}.footer{align-items:flex-start;flex-direction:column;line-height:1.8}.footer-links{flex-wrap:wrap}.hero-note{margin-top:35px}}
+@media(max-width:400px){.nav-actions{gap:7px}.nav-actions .nav-enter{gap:7px;padding:9px}.visual-stage{min-height:315px}.float-card.review{width:195px;padding:13px}.float-card.role{width:174px;padding:12px}.review-title{font-size:12px;margin:12px 0}.review-row{font-size:9px}.hero-actions{gap:15px}.primary-cta{padding:0 16px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none;filter:none}}
+
+/* Cinematic BrandLens opening intro */
+body.intro-active{overflow-y:hidden}
+.opening-intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:#08090d;opacity:1;visibility:visible;pointer-events:auto;transition:opacity .9s cubic-bezier(.2,.75,.2,1),visibility .9s}
+.opening-intro.is-done{opacity:0;visibility:hidden;pointer-events:none}
+.opening-core{position:relative;text-align:center;padding:2rem 1rem}
+.opening-mark{width:30px;height:30px;margin:0 auto 22px;position:relative;opacity:0;transform:scale(.7);animation:openingMarkIn .8s .2s cubic-bezier(.2,.75,.2,1) forwards}
+.opening-mark:before,.opening-mark:after{content:"";position:absolute;inset:1px;border:1px solid rgba(190,174,255,.9);border-radius:50%}
+.opening-mark:after{inset:7px;border-color:#9cecff;box-shadow:0 0 22px rgba(156,236,255,.28)}
+.opening-title{margin:0;padding-left:.2em;white-space:nowrap;font-size:clamp(2.8rem,8vw,6.8rem);font-weight:600;letter-spacing:.2em;line-height:1.1;opacity:0;filter:blur(14px);transform:translateY(12px);animation:openingTitleIn 1.2s .35s cubic-bezier(.2,.75,.2,1) forwards,openingTitleOut .7s 2.15s cubic-bezier(.2,.75,.2,1) forwards}
+.opening-title span{color:#c8bbff;text-shadow:0 0 38px rgba(166,139,255,.28)}
+.opening-line{height:1px;width:0;margin:22px auto 0;background:linear-gradient(90deg,transparent,#b39bff,#9cecff,transparent);animation:openingLineIn .9s .65s cubic-bezier(.2,.75,.2,1) forwards,openingLineOut .35s 2.3s ease forwards}
+.opening-caption{margin:16px 0 0;color:#858393;font:10px var(--mono);letter-spacing:.3em;opacity:0;animation:openingCaptionIn .6s .85s ease forwards,openingCaptionOut .35s 2.25s ease forwards}
+.opening-skip{position:absolute;left:50%;bottom:25px;transform:translateX(-50%);border:0;background:transparent;padding:12px;color:#777584;font:10px var(--mono);letter-spacing:.16em;cursor:pointer;transition:color .2s}
+.opening-skip:hover{color:#fff}
+@keyframes openingMarkIn{to{opacity:1;transform:rotate(90deg) scale(1)}}
+@keyframes openingTitleIn{to{opacity:1;filter:blur(0);transform:translateY(0)}}
+@keyframes openingTitleOut{to{opacity:0;filter:blur(12px);transform:translateY(-8px);letter-spacing:.38em}}
+@keyframes openingLineIn{to{width:min(340px,70vw)}}
+@keyframes openingLineOut{to{width:0;opacity:0}}
+@keyframes openingCaptionIn{to{opacity:1}}
+@keyframes openingCaptionOut{to{opacity:0}}
+@media(max-width:600px){.opening-title{font-size:clamp(2.25rem,10vw,4.2rem);letter-spacing:.12em;padding-left:.12em}.opening-skip{bottom:16px}}
+@media(prefers-reduced-motion:reduce){.opening-intro{transition:none}.opening-mark,.opening-title,.opening-line,.opening-caption{animation:none!important;opacity:1!important;filter:none!important;transform:none!important}.opening-title{letter-spacing:.08em}.opening-line{width:min(340px,70vw)}}
+
+</style>
+</head>
+<body class="intro-active">
+<div class="opening-intro" id="openingIntro" role="status" aria-label="BrandLens intro">
+  <div class="opening-core">
+    <div class="opening-mark" aria-hidden="true"></div>
+    <h1 class="opening-title">Brand<span>Lens</span></h1>
+    <div class="opening-line" aria-hidden="true"></div>
+    <p class="opening-caption">CLARITY IN EVERY IMPRESSION</p>
+  </div>
+  <button class="opening-skip" id="openingSkip" type="button">SKIP INTRO ↗</button>
+</div>
+<div class="noise" aria-hidden="true"></div>
+<div class="ambient" aria-hidden="true"><div class="ambient-glow"></div><div class="ambient-line"></div><div class="ambient-line alt"></div></div>
+<header class="topbar" id="topbar">
+  <a class="brand" href="#home" aria-label="BrandLens home"><span class="brandmark" aria-hidden="true"></span><span>BrandLens</span></a>
+  <nav class="nav" id="nav" aria-label="Main navigation">
+    <a href="#overview">Overview</a><a href="#workflow">How it works</a><a href="#about">About</a>
+  </nav>
+  <div class="nav-actions"><button class="nav-enter" data-enter>ENTER BRANDLENS <span aria-hidden="true">↗</span></button><button class="menu-button" id="menuButton" aria-label="Toggle navigation" aria-expanded="false">☰</button></div>
+</header>
+<main id="home">
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">AI-POWERED BRAND INTELLIGENCE</div>
+      <h1>Your brand.<span class="dim">Without the noise.</span></h1>
+      <p class="hero-desc">An intelligent space where every message stays true to your identity — aligned with your company, your audience, and your team's role.</p>
+      <div class="hero-actions"><button class="primary-cta" data-enter><span>ENTER BRANDLENS</span><span class="arrow" aria-hidden="true">↗</span></button><a class="text-cta" href="#overview">Explore the platform <span aria-hidden="true">↓</span></a></div>
+      <div class="hero-note"><span class="note-dot"></span><span>CONTEXT-AWARE. ROLE-AWARE. READY WHEN YOU ARE.</span></div>
+    </div>
+    <div class="visual-stage" id="visualStage" aria-label="Illustrative BrandLens review preview">
+      <div class="lens-art" id="lensArt"><div class="lens-inner"></div><div class="lens-center"></div><div class="lens-spark"></div><div class="lens-label">SIGNAL OVER NOISE</div><div class="lens-index">BL / 01 — CONTEXT</div></div>
+      <div class="float-card review">
+        <div class="card-kicker"><span>CONTENT REVIEW</span><span class="live-pill">PREVIEW</span></div>
+        <div class="review-title">A clearer view of every post.</div>
+        <div class="review-row"><span>Company relevance</span><span class="mini-status pass">PASS</span></div>
+        <div class="review-row"><span>Role permissions</span><span class="mini-status check">CHECK</span></div>
+      </div>
+      <div class="float-card role"><div class="card-kicker"><span>WORKSPACE CONTEXT</span><span>02 / 03</span></div><div class="role-big">Right message.<br>Right responsibility.</div><div class="role-copy">Review content with the context of your company and your assigned role.</div><div class="role-line"><span></span></div></div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+  <section class="section" id="overview">
+    <div class="section-top reveal"><div><div class="section-tag">01 / THE DIFFERENCE</div><h2>More than a spellcheck.<br><span class="accent">A sense of context.</span></h2></div><p class="section-intro">Good content is not just well written. It should belong to your brand, fit your team's responsibility, and make sense for the place it will appear.</p></div>
+    <div class="feature-grid">
+      <article class="feature reveal"><div class="feature-num">01 — CONTEXT</div><div class="feature-symbol"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.8"/><path d="m16 16 4.2 4.2M7.7 10.5h5.6M10.5 7.7v5.6"/></svg></div><h3>Company relevance</h3><p>Check whether a post belongs to your company's real services, audience, and approved topics — not just whether it sounds convincing.</p></article>
+      <article class="feature reveal"><div class="feature-num">02 — AUTHORITY</div><div class="feature-symbol"><svg viewBox="0 0 24 24"><path d="M12 3 19 6v5.2c0 4.4-2.9 7.7-7 9.8-4.1-2.1-7-5.4-7-9.8V6z"/><path d="m9 12 2 2 4-4"/></svg></div><h3>Role-aware governance</h3><p>Help each person communicate within their responsibilities, permissions, and the approvals their role requires.</p></article>
+      <article class="feature reveal"><div class="feature-num">03 — CLARITY</div><div class="feature-symbol"><svg viewBox="0 0 24 24"><path d="M5 4.5h14v11H9l-4 4z"/><path d="M8.5 8.5h7M8.5 11.5h4.5"/></svg></div><h3>Practical improvements</h3><p>Spot meaningful issues, understand why they matter, and make focused corrections before content is ready to publish.</p></article>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+  <section class="section" id="workflow">
+    <div class="workflow">
+      <div class="workflow-aside reveal"><div class="section-tag">02 / THE WORKFLOW</div><h2>From first draft<br>to <span class="accent">ready.</span></h2><p>One calm, connected workflow. Create your content, understand the feedback, make the changes that matter, and prepare the final version.</p></div>
+      <div class="workflow-steps">
+        <article class="step reveal"><div class="step-num">01</div><div><h3>Draft</h3><p>Write a post and choose where it belongs.</p></div><div class="step-arrow">↗</div></article>
+        <article class="step reveal"><div class="step-num">02</div><div><h3>Check</h3><p>Review company relevance, role scope, and content quality.</p></div><div class="step-arrow">↗</div></article>
+        <article class="step reveal"><div class="step-num">03</div><div><h3>Improve</h3><p>Apply a useful correction, review the media, and recheck changes.</p></div><div class="step-arrow">↗</div></article>
+        <article class="step reveal"><div class="step-num">04</div><div><h3>Prepare</h3><p>Save a reviewed version that is ready for the next step.</p></div><div class="step-arrow">↗</div></article>
+        <article class="step reveal"><div class="step-num">05</div><div><h3>Publish with permission</h3><p>Publish through an authorized connected account when the required integration is configured.</p></div><div class="step-arrow">↗</div></article>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+  <section class="section" id="about">
+    <div class="section-top reveal"><div><div class="section-tag">03 / BUILT WITH CONTEXT</div><h2>One workspace.<br><span class="accent">Your company's rules.</span></h2></div><p class="section-intro">BrandLens provides the review workspace. Each organization brings its own identity, verified facts, guidelines, and role permissions.</p></div>
+    <div class="about-strip">
+      <article class="about-card reveal"><div class="tiny">THE PRODUCT / 01</div><h3>Meet BrandLens.</h3><p>An AI-powered brand governance workspace designed to help teams create relevant, responsible, and consistent content. AI helps surface issues and suggestions; people remain responsible for review and approval.</p><a href="#workflow" class="detail-link">EXPLORE THE WORKFLOW <span>↗</span></a></article>
+      <article class="about-card reveal"><div class="tiny">CURRENT WORKSPACE / 02</div><h3>Configured for Nova Unlimited.</h3><p>For this workspace, BrandLens checks content against Nova Unlimited's server and hosting business context, available company facts, and the author's assigned role. The configuration can be adapted for another organization.</p><a href="#overview" class="detail-link">HOW CONTEXT IS USED <span>↗</span></a></article>
+    </div>
+  </section>
+
+  <section class="final-cta reveal"><div class="section-tag">A CLEARER WAY TO CREATE</div><h2>Make every<br>post count.</h2><p>Review with context. Improve with confidence. Keep every message aligned with your brand.</p><button class="primary-cta" data-enter><span>ENTER BRANDLENS</span><span class="arrow" aria-hidden="true">↗</span></button></section>
+</main>
+<footer class="footer"><a class="brand" href="#home"><span class="brandmark" aria-hidden="true"></span><span>BrandLens</span></a><span>BUILT FOR CLARITY. DESIGNED FOR TRUST.</span><div class="footer-links"><a href="#overview">Overview</a><a href="#workflow">How it works</a><a href="#about">About</a><a href="#home" data-enter>Enter</a></div></footer>
+
+<!-- Standalone reference modal. In the existing application, wire all ENTER BRANDLENS buttons to the real login route/modal instead. -->
+<div class="modal-backdrop" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+  <div class="login-preview"><div class="login-preview-head"><a class="brand" href="#home"><span class="brandmark" aria-hidden="true"></span><span>BrandLens</span></a><button class="x" id="closeModal" aria-label="Close login preview">×</button></div><h3 id="loginTitle">Enter your workspace.</h3><p>This standalone file is a visual reference. Connect this action to the existing BrandLens login screen when integrating it into the main application.</p><button class="primary-cta" id="closeModalCta"><span>BACK TO EXPERIENCE</span><span class="arrow">↗</span></button><div class="modal-note">EXISTING AUTHENTICATION MUST REMAIN UNCHANGED</div></div>
+</div>
+<script>
+(() => {
+  const openingIntro = document.getElementById('openingIntro');
+  const openingSkip = document.getElementById('openingSkip');
+  let introClosed = false;
+  const finishIntro = () => {
+    if (introClosed) return;
+    introClosed = true;
+    openingIntro.classList.add('is-done');
+    document.body.classList.remove('intro-active');
+    window.setTimeout(() => openingIntro.remove(), 1000);
+  };
+  openingSkip.addEventListener('click', finishIntro);
+  window.addEventListener('keydown', event => {
+    if (!introClosed && (event.key === 'Escape' || event.key === 'Enter' || event.key === ' ')) {
+      event.preventDefault();
+      finishIntro();
+    }
+  });
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    finishIntro();
+  } else {
+    window.setTimeout(finishIntro, 3000);
+  }
+
+  const topbar = document.getElementById('topbar');
+  const nav = document.getElementById('nav');
+  const menuButton = document.getElementById('menuButton');
+  const modal = document.getElementById('loginModal');
+  const closeModal = () => { modal.classList.remove('open'); document.body.style.overflow = ''; };
+  document.querySelectorAll('[data-enter]').forEach(button => button.addEventListener('click', event => {
+    // Integration note: replace this standalone reference modal with the current app's real login route/modal.
+    event.preventDefault(); modal.classList.add('open'); document.body.style.overflow = 'hidden';
+  }));
+  document.getElementById('closeModal').addEventListener('click', closeModal);
+  document.getElementById('closeModalCta').addEventListener('click', closeModal);
+  modal.addEventListener('click', event => { if (event.target === modal) closeModal(); });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape') closeModal(); });
+  menuButton.addEventListener('click', () => { const opened = nav.classList.toggle('open'); menuButton.setAttribute('aria-expanded', String(opened)); menuButton.textContent = opened ? '×' : '☰'; });
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { nav.classList.remove('open'); menuButton.setAttribute('aria-expanded', 'false'); menuButton.textContent = '☰'; }));
+  const scrollHandler = () => topbar.classList.toggle('scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', scrollHandler, {passive:true}); scrollHandler();
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if ('IntersectionObserver' in window && !reducedMotion) {
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('in-view'); observer.unobserve(entry.target); }
+    }), { threshold: .14, rootMargin: '0px 0px -35px 0px' });
+    document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
+  } else document.querySelectorAll('.reveal').forEach(element => element.classList.add('in-view'));
+  const stage = document.getElementById('visualStage'); const lens = document.getElementById('lensArt');
+  if (!reducedMotion && window.matchMedia('(pointer:fine)').matches) {
+    stage.addEventListener('pointermove', e => { const rect=stage.getBoundingClientRect(); const x=(e.clientX-rect.left)/rect.width-.5; const y=(e.clientY-rect.top)/rect.height-.5; lens.style.transform=`rotateX(${(-y*5).toFixed(2)}deg) rotateY(${(x*7).toFixed(2)}deg)`; }, {passive:true});
+    stage.addEventListener('pointerleave', () => { lens.style.transform='rotateX(0deg) rotateY(0deg)'; });
+  }
+})();
+</script>
+</body>
+</html>
